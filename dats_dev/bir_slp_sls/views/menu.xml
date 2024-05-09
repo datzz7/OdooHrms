@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="bir_slp_sls_menu_root" name="BIR VAT Relief" parent="account.menu_finance_reports" sequence="5" groups="account.group_account_manager"/>
+
+    <menuitem id="bir_slp_menu_sub" name="BIR (SLP) Report" parent="bir_slp_sls_menu_root" action="bir_slp_actions" sequence="10" groups="account.group_account_manager"/>
+
+    <menuitem id="bir_sls_menu_sub" name="BIR (SLS) Report" parent="bir_slp_sls_menu_root" action="bir_sls_actions" sequence="15" groups="account.group_account_manager"/>
+
+</odoo>

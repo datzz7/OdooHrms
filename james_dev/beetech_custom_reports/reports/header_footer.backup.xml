@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="external_layout_standard_custom" name="external_layout_standard_custom"
+    inherit_id="web.external_layout_standard">
+
+
+    <!-- div[1] is the header of the document to be customize -->
+    <xpath expr="//div[1]" position="replace">
+
+      <div t-attf-class="header" t-att-style="report_header_style">
+        <div class="row justify-content-between">
+            <div class="col-4">
+              <h2><span t-field='company.name' t-att-style="'color: %s;' % company.primary_color"/></h2>
+              <span t-field = 'company.partner_id.street'/> 
+              <span t-field = 'company.partner_id.street2'/> 
+              <span t-field = 'company.partner_id.city'/> 
+              <span t-field = 'company.partner_id.state_id'/> 
+              <span t-field = 'company.partner_id.zip'/> 
+              <span t-field = 'company.partner_id.country_id'/> 
+              <span t-field = 'company.partner_id' t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+              
+            </div>
+            <div class="col-4">
+              <div style="margin:0;padding:0;">
+                <img style="height:auto;width:100%;margin:0!important;padding:0!important;" t-attf-src="/r3hub_briq_report_customization/static/src/png/header.png" alt="Logo"/>
+              </div>
+            </div>
+        </div>
+      </div>
+    </xpath>
+
+
+   
+    <!-- div[3] is the footer of the document to be customize -->
+    <xpath expr="//div[3]" position="replace">
+      <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">        
+        <div t-if="report_type == 'pdf'" class="text-muted">
+          <div class="row">
+            <div class="col-6 text-right">
+              Page:
+            </div>
+            <div class="col-6 text-left pl-0">
+              <span class="page"/> / <span class="topage"/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </xpath>
+
+  </template>
+
+
+  <template id="external_layout_boxed_custom" name="external_layout_boxed_custom" inherit_id="web.external_layout_boxed">
+    <xpath expr="" position="inside">
+      
+    </xpath>
+  </template>
+
+</odoo>

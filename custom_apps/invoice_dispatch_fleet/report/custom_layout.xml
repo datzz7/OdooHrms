@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <template id="external_layout_dispatch">
+            <div t-attf-class="header" t-att-style="report_header_style">
+                <div class="row">
+                    <div class="col-9 mt-4 mb-2">
+                        <h2 t-field="user.env.company.name"/>
+                    </div>
+                    <div class="col-3 mt-4 mb-2" style="text-align:end;">
+                        <img t-if="user.env.company.logo" t-att-src="image_data_uri(user.env.company.logo)"
+                             style="max-height: 55px;" alt="Logo"/>
+                    </div>
+                </div>
+                <div class="text-center mt-2">
+                    <center>
+                        <h4>
+                            <b>Invoice Dispatch</b>
+                        </h4>
+                    </center>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-8">
+                        <div>
+                            <strong>Vehicle No :</strong>
+                            <span t-esc='o.vehicle_id.license_plate'/>
+                        </div>
+                        <br/>
+                        <div>
+                            <strong>Driver :</strong>
+                            <span t-esc='o.driver_id.name'/>
+                        </div>
+                        <br/>
+                        <div>
+                            <strong>Helper :</strong>
+                            <span t-esc='o.helper_id.name'/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <strong>Date :</strong>
+                            <span t-esc='o.date'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div t-attf-class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-raw="0"/>
+            </div>
+
+            <div t-attf-class="footer">
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <div>
+                            <strong>Dispatched By :</strong>
+                        </div>
+                        <div>
+                            <span t-esc='o.dispatcher_id.name'/>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="col-6">
+                        <div>
+                            <strong>Received By :</strong>
+                        </div>
+                        <div>
+                            <strong>Signature Over Printed Name/Date</strong>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted">
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>,
+                            <span t-esc="request.env.user.name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </data>
+</odoo>

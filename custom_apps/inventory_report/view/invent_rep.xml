@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="invent_rep_view_tree" model="ir.ui.view">
+        <field name="name">invent.rep.view.tree</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml" >
+            <tree create='0' edit='0' default_order = 'product_description ASC'>
+                <field name = 'internal_ref' string="Code"/>
+                <field name = 'product_description' string="Description" />
+                <field name="location_id" />
+                <field name="available_quantity" string= "PCS" />
+                <field name="case_qnty" string= "CASE" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="invent_rep_view_tree_action" model="ir.actions.act_window">
+        <field name="name">Inventory Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="inventory_report.invent_rep_view_tree"/>
+      
+    </record>
+</odoo>

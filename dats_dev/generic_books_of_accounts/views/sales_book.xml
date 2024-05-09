@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sales_book_action" model="ir.actions.act_window">
+        <field name="name">Sales Book</field>
+        <field name="res_model">briq.sales.book</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="domain">[]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="briq_sales_book_view_tree" model="ir.ui.view">
+        <field name="name">briq.sales.book.view.tree</field>
+        <field name="model">briq.sales.book</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Book">
+                <field name="date" optional="hide"/>
+                <field name="invoice_date"/>
+                <field name="move_id" />
+                <field name="partner_id"/>
+                <field name="tin_no" />
+                <field name="account_id"/>
+                <field name="debit" optional="hide"/>
+                <field name="credit" optional="hide"/>
+                <field name="total_amount"/>
+                <field name="date_maturity" optional="hide"/>
+                <field name="journal_id" optional="hide"/>
+                <field name="currency_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_briq_sales_book_pivot" model="ir.ui.view">
+        <field name="name">briq.sales.book.pivot</field>
+        <field name="model">briq.sales.book</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales" sample="1">
+                <field name="journal_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

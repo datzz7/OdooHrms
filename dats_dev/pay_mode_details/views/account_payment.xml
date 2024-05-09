@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_payment_wizard_inherit_form" model="ir.ui.view">
+        <field name="name">account.payment.form</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="payment_type_sel" invisible="1"/>
+                <field name="card_bank_provider" attrs="{'invisible': [('payment_type_sel', '!=', 'debit_credit')]}"/>
+                <field name="card_number" attrs="{'invisible': [('payment_type_sel', '!=', 'debit_credit')]}"/>
+
+                <field name="check_date" attrs="{'invisible': [('payment_type_sel', '!=', 'check')]}"/>
+                <field name="check_bank" attrs="{'invisible': [('payment_type_sel', '!=', 'check')]}"/>
+                <field name="check_number" attrs="{'invisible': [('payment_type_sel', '!=', 'check')]}"/>
+
+                <field name="date_deposited" attrs="{'invisible': [('payment_type_sel', '!=', 'deposit')]}"/>
+                <field name="bank_transferred" attrs="{'invisible': [('payment_type_sel', '!=', 'deposit')]}"/>
+
+                <field name="payment_facility" attrs="{'invisible': [('payment_type_sel', '!=', 'others')]}"/>
+                <field name="p_date_paid" attrs="{'invisible': [('payment_type_sel', '!=', 'others')]}"/>
+                <field name="remarks"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,11 @@
+<!-- 
+<template id="website_details_template" inherit_id="portal.portal_my_details">
+    <xpath expr="//div[@class='o_portal_details']" position="append">
+	    <select class="form-control" name="Province">
+		     <t t-foreach="province_id" t-as="province">
+		          <option t-attf-value="#{province.id}"><t t-esc="province.name"/></option>
+		     </t>
+	 	</select>	
+           
+    </xpath>
+</template> -->

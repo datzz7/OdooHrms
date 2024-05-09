@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="report_check_voucher_bbqboss">
+    <t t-foreach="docs" t-as="o">
+      <t t-call="web.html_container">
+        <t t-call="web.internal_layout">
+          <style>
+            .flex-webkit{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            }
+            .flex-webkit-row {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            }
+          </style>
+          <div class="page">
+            <div class="flex-webkit">
+              <div class="flex-webkit-row" style="width:60%;">
+                <div>
+                  <h3>
+                     <b>
+                      <span t-esc="o.journal_id.name"/>
+                    </b>
+                  </h3>
+                </div>
+                <div>
+                 
+                    <b>
+                      <span t-esc="o.name"/>
+                    </b>
+              
+                </div>
+              </div>
+              <div class="flex-webkit-row">
+                <div>
+                  <h3>CASH/CHECK VOUCHER</h3>
+                </div>
+                <div>
+                  <div> Date: <span t-esc="o.date"/>
+                  </div>
+                  <div> Check #: <span t-esc="o.ref"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Pay To</th>
+                    <th>Address</th>
+                    <th>Tin</th>
+                    <th>Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span t-esc="o.partner_id.name"/>
+                    </td>
+                    <td/>
+                    <td/>
+                    <td>
+                      <span t-esc="o.amount"/>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            <div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th> Accounts</th>
+                    <th> Particulars</th>
+                    <th>Quantity</th>
+                    <th> Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!--<t t-foreach="o.reconcile_invoice_ids" t-as="line">-->
+                  <!--    <tr>-->
+                  <!--      <td><span t-esc="line"/></td>-->
+                  <!--    </tr>-->
+                  <!--</t>-->
+                  <!--  <tr>-->
+                  <!--    <td><span t/></td>-->
+                  <!--  </tr>-->
+                  <t t-set="total" t-value="0"/>
+                  <!--       <t t-foreach="payment_dict[o.id]" t-as="line1">-->
+                  <!--      <t t-foreach="line1" t-as="line">-->
+                  <!--				<tr>-->
+                  <!--					<td>-->
+                  <!--						<span>-->
+                  <!--							<t t-esc="line['account_id'].code + line['account_id'].name"/>-->
+                  <!--						</span>-->
+                  <!--					</td>-->
+                  <!--					<td> -->
+                  <!--						<span>-->
+                  <!--							<t t-esc="line['name']"/>-->
+                  <!--						</span>-->
+                  <!--					</td>-->
+                  <!--					<td>-->
+                  <!--					  <t t-if="line['debit'] != 0">-->
+                  <!--					        <span>-->
+                  <!--							    <t t-esc="line['debit']"/>-->
+
+                  <!--						    </span>-->
+                  <!--						      <t t-set="total" t-value="total+line['debit']"/>-->
+                  <!--					  </t>-->
+                  <!--						<t t-if="line['credit'] != 0">-->
+                  <!--						  <span>-->
+                  <!--							<t t-esc="line['credit']"/>-->
+                  <!--						</span>-->
+                  <!--						<t t-set="total" t-value="total+line['credit']"/>-->
+                  <!--						</t>-->
+                  <!--					</td>-->
+
+                  <!--				</tr>-->
+                  <!--	</t>-->
+                  <!--</t>-->
+                  <t t-set="total" t-value="0"/>
+                  <t t-if="o.reconcile_invoice_ids">
+                    <tr>
+                      <td>
+                        <span t-esc="o.reconcile_invoice_ids.invoice_id.invoice_line_ids.account_id.name"/>
+                      </td>
+                      <td>
+                        <span t-esc="o.reconcile_invoice_ids.invoice_id.invoice_line_ids.product_id.name"/>
+                      </td>
+                      <td>
+                        <span t-esc="o.reconcile_invoice_ids.invoice_id.invoice_line_ids.quantity"/>
+                      </td>
+                      <td>
+                        <span t-esc="o.reconcile_invoice_ids.invoice_id.invoice_line_ids.price_subtotal"/>
+                      </td>
+                      <t t-set="total" t-value="o.reconcile_invoice_ids.invoice_id.invoice_line_ids.price_subtotal"/>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <t t-foreach="account_move_line" t-as="move_line">
+                      <t t-if="move_line.display_type == 'line_note' or move_line.display_type == 'line_section'">
+                        <tr>
+                          <td colspan="4">
+                            <b>
+                              <span t-esc="move_line.name"/>
+                            </b>
+                          </td>
+                        </tr>
+                      </t>
+
+                      <t t-else="">
+                        <tr>
+                          <td>
+                            <span t-esc="move_line.account_id.name"/>
+                          </td>
+                          <td>
+                            <span t-esc="move_line.product_id.name"/>
+                          </td>
+                          <td>
+                            <span t-esc="move_line.quantity"/>
+                          </td>
+                          <td>
+                            <span t-esc="move_line.price_subtotal"/>
+                          </td>
+                          <t t-set="total" t-value="total+move_line.price_subtotal"/>
+                        </tr>
+                      </t>
+
+
+                    </t>
+                  </t>
+
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" style="text-align:right;">
+                      SubTotal Amount-&gt;
+                    </td>
+                    <td>
+                      <span>
+                        <t t-esc="'{:.2f}'.format(total)"/>
+                      </span>
+                    </td>
+                  </tr>
+                   <tr>
+                    <td colspan="3" style="text-align:right;">
+                      Total Amount-&gt;
+                    </td>
+                    <td>
+                      <span>
+                        <t t-esc="account_move.amount_total"/>
+                      </span>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div class="footer">
+            <table class="table border-0">
+              <tr>
+                <td width="33.33%">Prepared By: <b><span t-esc = 'o.user_id.name'/></b></td>
+                <td width="33.33%">Approved By:</td>
+                <td width="33.33%">Received By:</td>
+              </tr>
+            </table>
+
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+
+
+</odoo>

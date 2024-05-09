@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Report Action -->
+    <report id="action_report_deliveryrecieipt"
+        string="Delivery Receipt"
+        model="stock.picking"
+        report_type="qweb-html"
+        name="enhancements_module_r3hub.report_deliveryrecieipt"
+        file="enhancements_module_r3hub.report_deliveryrecieipt"
+        menu="True"/>
+
+</odoo>

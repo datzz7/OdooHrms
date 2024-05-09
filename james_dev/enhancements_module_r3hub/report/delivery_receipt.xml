@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_deliveryrecieipt_document" name="report_deliveryrecieipt_document">
+    <t t-call="web.html_container">
+      <t t-call="web.basic_layout">
+        <div class="header">
+          <div class="row" style="max-height: 200px;">
+            <div class="col-6" style="max">
+              <img src="/statement_of_account_report/static/img/beetech_logo3.png"
+                alt="Image is not loading." height="100px" />
+            </div>
+            <div class="col-6">
+              <!--<img
+          src="/statement_of_account_report/static/img/img-r3hub_2.png" alt="Image is not
+          loading." height="100px" />-->
+            </div>
+          </div>
+        </div>
+        <div class="page">
+
+          <div id="section_1">
+            <h3>DELIVERY RECEIPT</h3>
+            <table class="table table-sm">
+              <tr class="border-0">
+                <td style="background-color:#253b63;width:50%!important;"
+                  class="border-0 p-1 text-white">Delivery To:</td>
+                <td class="border-0 p-1 text-white" />
+              </tr>
+              <tr class="border-0">
+                <td class="border-0">
+
+
+                  <!--<div
+                  style="background-color:#253b63;" class="p-1 text-white">Delivery To:</div>-->
+                  <div>
+                    <t t-esc="o.partner_id.name" />
+                  </div>
+                  <div>
+                    <t t-esc="o.partner_id.street" />
+                    <t t-esc="o.partner_id.street2" />
+                    <t t-esc="o.partner_id.city" />
+                  </div>
+                </td>
+                <td class="border-0">
+                  <div>
+                    <span>Date: </span>
+                    <span t-esc="o.date_done" />
+                  </div>
+                  <div>
+                    <span>DR #: </span>
+                    <span t-esc="o.origin" />
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+            <div>
+
+            </div>
+          </div>
+
+          <div id="section_2">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th style="background-color:#253b63;" class="text-white">Item</th>
+                  <th style="background-color:#253b63;" class="text-white">Description</th>
+                  <th style="background-color:#253b63;" class="text-white">Qty</th>
+                  <th style="background-color:#253b63;" class="text-white">Serial No./s</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-set="count" t-value="0" />
+                <t t-foreach="o.move_ids_without_package" t-as="line">
+                  <tr>
+                    <t t-set="count" t-value="count+1" />
+                    <td>
+                      <span t-esc="count" />
+                    </td>
+                    <td>
+                      <span t-field="line.product_id" />
+                    </td>
+                    <td>
+                      <span t-esc="line.quantity_done" />
+                    </td>
+                    <td>
+                      <t t-foreach="o.move_line_ids" t-as="move_line">
+                        <t t-if="move_line.product_id == line.product_id">
+                          <div>
+                            <span t-field="move_line.lot_id" />
+                          </div>
+                        </t>
+                      </t>
+                    </td>
+
+
+                  </tr>
+                </t>
+                <!--<t
+                t-foreach="o.move_line_ids" t-as="line">-->
+                <!--    <tr>-->
+                <!--      <t t-set="count" t-value="count+1"/>-->
+                <!--      <td><span t-esc="count"/></td>-->
+                <!--      <td><span t-field="line.product_id"/></td>-->
+                <!--      <td><span t-esc="line.qty_done"/></td>-->
+                <!--      <td><span t-field="line.lot_id"/></td>-->
+                <!--    </tr>-->
+                <!--  </t>-->
+
+              </tbody>
+            </table>
+
+
+          </div>
+
+          <div>
+            <table class="table table-sm border">
+              <tr>
+                <th style="background-color:#253b63;" class="text-white">Other CommentsL</th>
+              </tr>
+              <tr>
+                <td>
+                  <div>Sealed Unit</div>
+                  <div>1 year warranty</div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="row">
+            <div class="col-4">
+              <table class="table table-sm w-75 border">
+                <thead>
+                  <tr>
+                    <th style="background-color:#253b63" class="text-white">Preparder By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style="margin-top: 20px;!important">
+                        <span>Emerson Cruz</span>
+                      </div>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-4">
+              <table class="table table-sm w-75 border">
+                <thead>
+                  <tr>
+                    <th style="background-color:#253b63" class="text-white" colspan="2">Delivered By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style="margin-top: 20px;!important">
+                        <span>Rodney Español</span>
+                      </div>
+
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-4">
+              <table class="table table-sm w-75 border">
+                <thead>
+                  <tr>
+                    <th style="background-color:#253b63" class="text-white">Received By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style="margin-top: 20px;!important">
+                        [data]
+                      </div>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="text-center pb-4" style="font-size: 10px;">
+            <div class="font-italic">If you have any questions about this Delivery Receipt, please
+              contact</div>
+            <div class="font-italic">emerson Cruz | 09177704329 | emer@r3hub.net</div>
+            <div class="font-italic">
+              <b>Thank you for your Business</b>
+            </div>
+          </div>
+        </div>
+      </t>
+    </t>
+  </template>
+
+
+  <template id="report_deliveryrecieipt" name="report_deliveryrecieipt">
+    <t t-foreach="docs" t-as="o">
+      <t t-call="enhancements_module_r3hub.report_deliveryrecieipt_document" />
+    </t>
+  </template>
+
+
+</odoo>

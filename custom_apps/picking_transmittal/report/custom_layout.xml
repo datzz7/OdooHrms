@@ -1,0 +1,96 @@
+<odoo>
+    <data>
+        <template id="external_layout_transmittal">
+            <div t-attf-class="header" t-att-style="report_header_style">
+                <div class="row">
+                    <div class="col-9 mt-4 mb-2">
+                        <h2 t-field="user.env.company.name"/>
+                    </div>
+                    <div class="col-3 mt-4 mb-2" style="text-align:end;">
+                        <img t-if="user.env.company.logo" t-att-src="image_data_uri(user.env.company.logo)"
+                            style="max-height: 55px;" alt="Logo"/>
+                    </div>
+                </div>
+                <div class="text-center mt-2">
+                    <center>
+                        <h4>
+                            <b>Picking Transmittal</b>
+                        </h4>
+                    </center>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-8">
+                        <div>
+                            <strong>Area :</strong>
+                            <span t-esc='o.area_country_id.country_id.name'/>
+                        </div>
+                        <div>
+                            <strong>Salesman :</strong>
+                            <span t-esc='o.trans_salesman_id.name'/>
+                        </div>
+                        <div>
+                            <strong>Transmittal To :</strong>
+                            <span t-esc='o.transmittal_to.name'/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <strong>Date/Time Transmitted :</strong>
+                            <span t-esc='o.transmitted_date'/>
+                        </div>
+                        <div>
+                            <strong>Date/Time Received :</strong>
+                            <span t-esc='o.received_date'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div t-attf-class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-raw="0"/>
+            </div>
+
+            <div t-attf-class="footer">
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <div>
+                            <strong>Prepared By :</strong>
+                        </div>
+                        <div>
+                            <span t-esc='o.prepared_by.name'/>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="col-6">
+                        <div>
+                            <strong>Received By :</strong>
+                        </div>
+                        <div>
+                            <strong>Signature Over Printed Name/Date</strong>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page:
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-muted">
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>,
+                            <span t-esc="request.env.user.name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </data>
+</odoo>

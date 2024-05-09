@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_free_goods_lines,access_sale_order_free_goods_lines,model_sale_order_free_goods_lines,base.group_user,1,1,1,1
+access_stock_picking_free_goods_lines,access_stock_picking_free_goods_lines,model_picking_free_goods_lines,base.group_user,1,1,1,1
+access_stock_picking_overlanded_goods_lines,access_stock_picking_overlanded_goods_lines,model_picking_overlanded_goods_lines,base.group_user,1,1,1,1

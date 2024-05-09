@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_document" name="report_invoice_document" inherit_id="account.report_invoice_document">
+        <!-- Inherited Report -->
+        <xpath expr="//h3[@class='h3']/t[1]" position="replace">
+            <t t-if="o.move_type == 'out_invoice' and o.state == 'posted' and o.invoice_type == 'tra'">
+                Trust Receipt Agreement
+            </t>
+            <t t-elif="o.move_type == 'out_invoice' and o.state == 'posted' and o.invoice_type == 'csi'">
+                Charge Sales Invoice
+            </t>
+            <t t-else="o.move_type == 'out_invoice' and o.state == 'posted' and o.invoice_type == 'csinv'">
+                Cash Sales Invoice
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

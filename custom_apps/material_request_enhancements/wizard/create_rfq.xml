@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record model="ir.ui.view" id="check_availability_wizard_form">
+        <field name="name">create.transfer.wizard</field>
+        <field name="model">create.requisition</field>
+        <field name="arch" type="xml">
+            <form string="Create RFQ">
+                <p>The approved quantity is less than the requested quantity. Do you wish to create 
+                    a purchase for the balance?
+                </p>
+                <footer>
+                    <button string="Create RFQ" name="auto_create_rfq_material" confirm="Create RFQ?" type="object" class="btn-primary"  groups="material_request.group_material_request_manager"/>
+                    <button string="Proceed to Issuance" name="proceed" confirm="Proceed?" type="object" class="btn-success" groups="material_request.group_material_request_manager" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="check_availability_action_wizard_confirm" model="ir.actions.act_window">
+        <field name="name">New</field>
+        <field name="res_model">create.requisition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="check_availability_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

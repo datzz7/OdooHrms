@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="modif_report_check_writer" inherit_id="invoice_payment_reports.report_check_writer">
+        <xpath expr="//div[@class='page']" position="replace">
+            <!-- DATE -->
+                        <div style="position:absolute;top:0.5cm;left:17.95cm;font-size:16px;padding-bottom:0">
+                            <t t-if="o.date"> 
+                                <!--<span t-field="o.payment_date"/>-->
+                                <div id ="payement-date">
+                                    <div id="payment-date-month" style="float:left;">
+                                  <span style="letter-spacing:9px;" t-field="o.date" t-options="{&quot;format&quot;:&quot;MM&quot;}"/>
+                                </div>
+                                <div id="payment-date-day" style="float:left;margin:0 20px;">
+                                  <span style="letter-spacing:9px;" t-field="o.date" t-options="{&quot;format&quot;:&quot;dd&quot;}"/>
+                                </div>
+                                <div id="payment-date-year" style="float:left;">
+                                  <span style="letter-spacing:12px;" t-field="o.date" t-options="{&quot;format&quot;:&quot;yyyy&quot;}"/>
+                                </div>
+                                </div>
+                                
+                                <!--<span t-esc="formatLang(o.payment_date, {'date': True, 'date_format': 'MM'})"/>-->
+                            </t>
+                        </div>
+
+
+            <!-- AMOUNT IN FIGURES -->	    
+                    
+                        <div style="position:absolute;top:1.5cm;left:18.0cm;font-size:16px;padding-bottom:0">
+                            <t t-if="o.check_amount">*** 
+                                <span t-field="o.check_amount"/>
+                            </t>
+                        </div>
+
+
+            <!-- PAYEE -->
+                    <div id="val" style="position:absolute;top:1.7cm;left:3.5cm;width:20cm;font-size:16px;font-weight:bold;padding-bottom:0">
+                        <t t-if="o.partner_id">
+                            <span t-field="o.partner_id"/>
+                        </t>
+                    </div>
+
+            <!-- AMOUNT IN WORDS -->
+                <div id="val" style="position:absolute;top:2.4cm;left:2.3cm;width:20cm;font-size:16px;padding-bottom:0"> 
+                    <t t-if="o.check_amount">***
+                        <!--<span t-esc="o.currency_id.amount_to_text(o.check_amount)"/> -->
+                         <span t-esc="o.check_amount_in_word"/> ***
+                    </t>
+                    </div>
+    </xpath>
+        
+    </template>
+
+</odoo>

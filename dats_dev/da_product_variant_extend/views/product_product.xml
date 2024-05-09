@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_variant_template_extend_inherit_form" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='brand_id']" position="after">
+                <field name="variant_model_id" options="{'no_create': True}"/>
+                <field name="variant_warranty_id" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_variant_extend_inherit_form" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='brand_id']" position="after">
+                <field name="variant_model_id" options="{'no_create': True, 'no_open':True}"/>
+                <field name="variant_warranty_id" options="{'no_create': True, 'no_open':True}"/>
+                <field name="product_division_id"  options="{'no_create': True, 'no_open':True}"/>
+                <field name="product_department_id"  options="{'no_create': True, 'no_open':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

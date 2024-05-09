@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- CUSTOM PAPER FORMAT -->
+    <record id="bir_temp_paperformat" model="report.paperformat">
+        <field name="name">BIR Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <!-- <field name="page_height">149</field>
+        <field name="page_width">210</field> -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="bir_2307_temp_paperformat" model="report.paperformat">
+        <field name="name">BIR 2307 Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <!-- <field name="page_height">149</field>
+        <field name="page_width">210</field> -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+     <!-- ACTIONS FOR REPORT -->   
+     <report 
+     id="bir_si_gen"
+     string="BIR Sales Invoice"
+     model="account.move"
+     report_type="qweb-html"
+     name="bir_template_report.bir_sales_invoice_rep"
+     file="bir_template_report.bir_sales_invoice_rep"
+     menu="True"
+     paperformat="bir_template_report.bir_temp_paperformat"
+     />
+
+    <report 
+        id="bir_2307t_gen"
+        string="BIR Witholding 2307"
+        model="account.payment"
+        report_type="qweb-html"
+        name="bir_template_report.bir_temp_paperformat"
+        file="bir_template_report.bir_temp_paperformat"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+        />
+
+    <report 
+        id="bir_official_receipt_rep_list_gen"
+        string="BIR Official Receipt"
+        model="account.payment"
+        report_type="qweb-html"
+        name="bir_template_report.bir_official_receipt_rep"
+        file="bir_template_report.bir_official_receipt_rep"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+        />
+
+    <report 
+        id="bir_collection_receipt_rep_list_gen"
+        string="BIR Collection Receipt"
+        model="account.payment"
+        report_type="qweb-html"
+        name="bir_template_report.bir_collection_receipt_rep"
+        file="bir_template_report.bir_collection_receipt_rep"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+        />
+
+    <!-- <report 
+        id="bir_check_voucher_rep_list_gen"
+        string="BIR Check Voucher"
+        model="account.payment"
+        report_type="qweb-html"
+        name="bir_template_report.bir_check_voucher_rep"
+        file="bir_template_report.bir_check_voucher_rep"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+        /> -->
+
+    <report 
+        id="bir_check_voucher_rep_list_gen_full"
+        string="BIR Check Voucher"
+        model="account.payment"
+        report_type="qweb-html"
+        name="bir_template_report.bir_check_voucher_rep_full"
+        file="bir_template_report.bir_check_voucher_rep_full"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+        />
+
+    <report
+        id="bir_composition_cas_rep_gen"
+        string="BIR Composition CAS"
+        model="account.move"
+        report_type="qweb-html"
+        name="bir_template_report.bir_comp_cas_apv_rep"
+        file="bir_template_report.bir_comp_cas_apv_rep"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+    />
+
+    <report
+        id="bir_composition_cas_rep_gen_full"
+        string="BIR Composition CAS FULL PAGE"
+        model="account.move"
+        report_type="qweb-html"
+        name="bir_template_report.bir_comp_cas_apv_rep_full"
+        file="bir_template_report.bir_comp_cas_apv_rep_full"
+        menu="True"
+        paperformat="bir_template_report.bir_temp_paperformat"
+    />
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ks_rma_inherit_form" model="ir.ui.view">
+        <field name="name">ks.rma.form</field>
+        <field name="model">ks.rma</field>
+        <field name="inherit_id" ref="ks_rma.ks_rma_view_orders_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='ks_rma_line']/field[@name='ks_rma_line_ids']/tree/field[@name='ks_product_id']" position="after">
+                <field name="check_tracking" invisible="1"/>
+                <field name="lot_id" attrs="{'readonly': [('check_tracking','=', False)]}"/>
+            </xpath>
+<!-- 
+            <xpath expr="//field[@name='ks_picking_id']" position="attributes">
+                <attribute name="domain">[('origin','=',ks_get_picking), ('state', '=', 'done')]</attribute>
+            </xpath>
+         -->
+        </field>
+    </record>
+
+</odoo>

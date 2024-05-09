@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="bir_invoice_w_payments" name="bir_invoice_w_payments">      
+        <t t-call="beetech_bir_template_report.bir_external_layout">
+            <div class="page">
+                    <div class="temp-header" style="overflow:hidden;">
+                        <div class="text-center" style="background-color: #f9f3f7;"><strong>Invoice with Payments</strong></div>
+                        
+                        <div class="row">
+                           <div class="col-6">
+                              
+                              <div class="d-flex flex-row" style="width:100%">
+                                <div style="width:30%;"><span>PAY TO</span></div>
+                                <div style="width:65%">
+                                  <div style="border-bottom:1px black solid;width:100%;">
+                                    <span t-esc="docs.partner_id.name"/>
+                                  </div>
+                                  
+                                  <span t-field="docs.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                                  <span>Tax ID: <span t-field="docs.partner_id.vat"/></span>
+                                  </div>
+                              </div>
+                             
+                           </div>
+                           <div class="col-6 ">
+                             <!--<div style="width:10%;float:left;"><span>Date</span></div>-->
+                             <!--   <div style="border-bottom:1px black solid;width:80%;float:left;"><span><t t-esc="docs.invoice_date"/></span></div>-->
+                             <div class="d-flex flex-row" style="width:100%">
+                                <div style="width:40%;"><span>Bill Date</span></div>
+                                <div style="border-bottom:1px black solid;width:80%;"><span t-field="docs.invoice_date"/></div>
+                             </div>
+                             <div class="d-flex flex-row">
+                                <div style="width:40%;"><span>Due Date</span></div>
+                                <div style="border-bottom:1px black solid;width:80%;"><span t-field="docs.invoice_date_due"/></div>
+                             </div>
+                             <div class="d-flex flex-row">
+                                <div style="width:40%;"><span>Payment Term</span></div>
+                                <div style="border-bottom:1px black solid;width:80%;"><span t-field="docs.invoice_payment_term_id.name"/></div>
+                             </div>
+                             <div class="d-flex flex-row">
+                                <div style="width:40%;"><span>PO Reference</span></div>
+                                <div style="border-bottom:1px black solid;width:80%;"><span t-field="docs.purchase_id"/></div>
+                             </div>
+                             <div class="d-flex flex-row">
+                                <div style="width:40%;"><span>DR Reference</span></div>
+                                <div style="border-bottom:1px black solid;width:80%;"><span t-field="docs.dr_ref"/></div>
+                             </div>
+                             <div class="d-flex flex-row">
+                                <div style="width:40%;"><span>Currency</span></div>
+                                <div style="border-bottom:1px black solid;width:80%;"><span t-field="docs.currency_id"/></div>
+                             </div>
+                            
+                           </div>
+                        </div>
+                    </div>
+                  <div class="temp-body">
+                        <div style="min-height:100%;height:100%;">
+                           <div style="width:100%;overflow:auto;">
+                              <div style="width:70%;float:left;">
+                                  <div style="border-right:1px black solid;border-bottom:1px black solid;">
+                                    <div style="min-height:20%;">
+                                      <div>
+                                          <div style="width:100%;text-align:center;border-bottom:1px black solid;border-top:1px black solid;">
+                                              <span>PARTICULARS</span>
+                                          </div>
+                                          <div style="width:100%;">
+                                            <div style="width:100%;">
+                                                <table style="width:100%;border:0;">
+                                                    <tr>
+                                                        <th style="width:20%;border:0;">Date</th>
+                                                        <th style="width:20%;border:0;">RR#</th>
+                                                        <th style="width:20%;border:0;">DR#</th>
+                                                        <th style="width:20%;border:0;">SI#</th>
+                                                        <th style="width:20%;border:0;">Amount</th>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td style="width:20%;border:0;"><t t-esc="docs.invoice_date"/></td>
+                                                        <td style="width:20%;border:0;"><t t-esc="docs.name"/></td>
+                                                        <td style="width:20%;border:0;"/>
+                                                        <td style="width:20%;border:0;"/>
+                                                        <td style="width:20%;border:0;"><t t-esc="docs.amount_total"/></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    
+                                    <div style="min-height:60%;height:60%;">
+                                      <!--HEAD-->
+                                      <div style="overflow:auto;border-top:1px black solid;border-bottom:1px black solid;height:10%;">
+                                       <div style="width:33.30%;float:left;text-align:center;">
+                                         <div/>
+                                            <div style="color:white; visibility: hidden;">.</div>
+                                         </div>
+                                           <div style="width:33.30%;float:left;text-align:center;overflow:auto;">
+                                            <div style="text-align: center;">Payments</div>
+                                        </div>
+                                       <div style="width:33.30%;float:left;text-align:center;">
+                                         <!--<div>Credit</div>-->
+                                      </div>
+                                    </div>
+                                    
+                                    
+                                    <!--BODY-->
+                                      <table class="table">
+                                          <tbody>
+                                              <tr>
+                                                  <td>Date</td>
+                                                  <td>Payment Ref #</td>
+                                                  <td>Journal</td>
+                                                  <td>Check #</td>
+                                                  <td>Check Date</td>
+                                                  <td>Amount</td>
+                                              </tr>
+                                              <t t-set="total_payment" t-value="0"/>
+                                              <tr t-foreach="docs.return_invoice_payments()" t-as="payment">
+                                                    <td><t t-esc="payment['payment_date']"/></td>
+                                                    <td><t t-esc="payment['ref']"/></td>
+                                                    <td><t t-esc="payment['journal']"/></td>
+                                                    <td><t t-esc="payment['check_no']"/></td>
+                                                    <td><t t-esc="payment['check_date']"/></td>
+                                                    <td><t t-esc="payment['amount']"/></td>
+                                                    <t t-set="total_payment" t-value="total_payment+payment['amount']"/>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+    
+                                    
+                                      <!--BODY-->
+                                  <!--    <div style="overflow:auto;height:80%;">-->
+                                  <!--       <div style="width: 33.33%;float:left;border-right:1px black solid;min-height:100%;">-->
+                                  <!--        <t t-foreach="docs.line_ids" t-as="journal_items_line">-->
+                                          <!--Account Title Content-->
+                                  <!--            <div><t t-esc="journal_items_line.account_id.name"/>RAPRA</div>-->
+                                  <!--            <div><t t-esc="journal_items_line.account_id.name"/>Date</div>-->
+                                  <!--          </t>-->
+                                  <!--        </div>-->
+                                  <!--      <div style="width: 33.33%;float:left;border-right:1px black solid;min-height:100%;;">-->
+                                              <!--Debit Content-->
+                                  <!--            <t t-set="debit_total" t-value="0"/>-->
+                                  <!--            <t t-foreach="docs.line_ids" t-as="journal_items_line_debit">-->
+                                  <!--                <t t-set="debit_total" t-value="debit_total+journal_items_line_debit.debit"/>-->
+                                  <!--                <div class="text-right"><t t-esc="journal_items_line_debit.debit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></div>-->
+                                                  
+                                  <!--            </t>-->
+                                  <!--            <div class="text-right" style="width=100%;border-top:1px black solid;"><span><t t-esc="debit_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></span></div>-->
+                                  <!--      </div>-->
+                                  <!--      <div style="width: 33.33%;float:left;min-height:100%;">-->
+                                            <!--Credit Content-->
+                                  <!--          <t t-set="credit_total" t-value="0"/>-->
+                                  <!--          <t t-foreach="docs.line_ids" t-as="journal_items_line_credit">-->
+                                  <!--            <t t-set="credit_total" t-value="credit_total+journal_items_line_credit.credit"/>-->
+                                  <!--              <div class="text-right"><t t-esc="journal_items_line_credit.credit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></div>-->
+                                  <!--          </t>-->
+                                  <!--           <div class="text-right" style="width=100%;border-top:1px black solid;"><span><t t-esc="credit_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></span></div>-->
+                                  <!--      </div>-->
+                                  <!--    </div>-->
+                                  
+                                  <!--</div>-->
+                                  
+                                    <div style="min-height:20%;height:20%;overflow:auto;border-top:1px black solid;">
+                                    
+                                    <div style="width: 33.33%;float:left">
+                                        <div>
+                                            <div>Prepared By:</div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="width: 33.33%;float:left">
+                                        <div>
+                                            Checked By:
+                                        </div>
+                                    </div>
+                                    <div style="width: 33.33%;float:left;">
+                                         <div>
+                                            Approved By:
+                                        </div>
+                                    </div>
+                                     <div style="width: 33.33%;float:left;">
+                                        <div>
+                                            <div>BFFI Admin: </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                      
+                              <div style="width:30%;float:left;">
+                                  <!--AMOUNT CONTAINER-->
+                                  <div style="width:100%;border-top:1px black solid;border-bottom:1px black solid;">
+                                      <div style="min-height:20%;">
+                                          <div style="text-align:center;border-bottom:1px black solid;">
+                                              <span>TOTALS</span>
+                                          </div>
+                                          <div style="width:100%;">
+                                              <div style="overflow:auto;width:100%;">
+                                                 <span>Invoice Amount</span>
+                                                <div style="float:right;margin-right:20px;" class="text-right">
+                                                  <span><t t-esc="docs.amount_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></span>
+                                                </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      
+                                      <div style="min-height:80%;">
+                                          <div style="border-top:1px black solid;">
+                                              <div class="d-flex justify-content-between" style="width:90%;margin:auto;"><span>Payments</span><span><t t-esc="total_payment" t-options="{'widget':'float', 'precision': 2}"/></span></div>
+                                               
+                                              <div class="d-flex justify-content-between" style="width:90%;margin:auto;border-bottom:1px black solid;"><span>Balance</span><span><span t-field="docs.amount_residual" t-options="{'widget':'float', 'precision': 2}"/></span></div>
+                                              
+                                          </div>
+                                          
+                                          <!--AMOUNT IN WORD-->
+                                          <div style="height:150px;width:100%;">
+                                              <div style="margin:auto;padding:10px;">
+                                                  <span>
+                                                      <t t-esc="docs.convert_amount_to_word(docs.amount_residual)"/>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                          
+                                        <div>
+                                            <div>
+                                                <div><span>In payment of the above account</span></div>
+                                                <div style="margin-top:15px;"><span/></div>
+                                                <div style="width:100%;text-align:center;border-top:1px black solid;"><span>PAYEE</span></div>
+                                            </div>
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+                           </div>
+                        </div>
+                        
+                    </div>
+              </div>
+            </t>
+    </template>
+
+</odoo>

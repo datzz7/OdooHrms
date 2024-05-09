@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_unserved_stock_list_tree" model="ir.ui.view">
+            <field name="name">unserved.stock.list.tree</field>
+            <field name="model">unserved.stock.list</field>
+            <field name="arch" type="xml">
+                <tree string="Unserved Stock List">
+                    <field name="product_id"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="warehouse_id" groups="stock.group_stock_multi_warehouses"/>
+                    <field name="picking_ref_id"/>
+                    <field name="partner_id"/>
+                    <field name="so_ref"/>
+                    <field name="unserved_qty"/>
+                    <field name="product_uom"/>
+                    <field name="price_unit" widget="monetary"/>
+                    <field name="unserved_amount" widget="monetary"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_unserved_stock_list_form" model="ir.ui.view">
+            <field name="name">unserved.stock.list.form</field>
+            <field name="model">unserved.stock.list</field>
+            <field name="arch" type="xml">
+                <form string="Unserved Stock List">
+                    <sheet>
+                        <group name="Unserved Stock">
+                            <group>
+                                <field name="product_id"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="warehouse_id"/>
+                                <field name="picking_ref_id"/>
+                                <field name="partner_id"/>
+                                <field name="so_ref"/>
+                            </group>
+                            <group>
+                                <field name="unserved_qty"/>
+                                <field name="product_uom"/>
+                                <field name="price_unit" widget="monetary"/>
+                                <field name="unserved_amount" widget="monetary"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_unserved_stock_list" model="ir.actions.act_window">
+            <field name="name">Unserved Stock List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">unserved.stock.list</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_unserved_stock_list" name="Unserved Stock List"
+                  parent="stock.menu_warehouse_report" sequence="111"
+                  action="action_unserved_stock_list"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bir_slp_module,access_bir_slp_module,model_bir_slp,base.group_user,1,1,1,1
+access_bir_sls_module,access_bir_sls_module,model_bir_sls,base.group_user,1,1,1,1

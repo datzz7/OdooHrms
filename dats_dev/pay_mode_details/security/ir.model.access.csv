@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pay_mode_details_pay_mode_details,pay_mode_details.pay_mode_details,model_pay_mode_details_pay_mode_details,base.group_user,1,1,1,1

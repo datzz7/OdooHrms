@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="bir_2307">
+         <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <style>
+                    #form-bg {
+                    width:100%;
+                    height:340mm;
+                    }
+                    
+                    #tax-payer-tin{
+                      position:absolute;
+                      left:34.5%;
+                      top:14.5%;
+                    }
+                    .tin-split{
+                      letter-spacing:10px;
+                      float:left;
+                    }
+                    #payee-name{
+                      position:absolute;
+                      left:8%;
+                      top:17.5%;
+                    }
+                    #payee-address{
+                      position:absolute;
+                      left:8%;
+                      top:20.5%;
+                    }
+                    #payee-zipcode{
+                       
+                      position:absolute;
+                      left:88.8%;
+                      top:20.5%;
+                      letter-spacing: 10px;
+                    }
+                    
+                    
+                    #tax-payor-tin{
+                     position:absolute;
+                      left:34.5%;
+                      top:27%;
+                    }
+                    #payor-name{
+                      position:absolute;
+                      left:8%;
+                      top:30%;
+                    }
+                    #payor-address{
+                      position:absolute;
+                      left:8%;
+                      top:33%;
+                    }
+                    #payor-zipcode{
+                      position:absolute;
+                      left:88.8%;
+                      top:33%;
+                      letter-spacing: 10px;
+                    }
+                </style>
+                <t t-set="tin_splited" t-value='[]'/>
+                
+                <!--Split tin-->
+                <t t-set="tin_splited" t-value='str(docs.partner_id.vat).split("-")'/>
+                
+                
+                <!--FULL FORM-->
+                <div id="form-bg" style="position:relative;">
+                    <!--BACKGROUND FORM-->
+                    <div>
+                      <img src="/bir_template_report/static/src/img/bir_p1.jpg" alt="image is not loading" width="100%" height="100%" id="bif-form-fill"/>
+                    </div>
+                    
+                    <!--PAYEE TIN-->
+                    <div id="tax-payer-tin" >
+                      <!--<span><t t-esc="docs.partner_id.vat"/></span>-->
+                      <div class="tin-split">
+                          <span><t t-esc="tin_splited[0]"/></span>
+                      </div>
+                      <div class="tin-split" style="margin-left: 20px;">
+                          <span><t t-esc="tin_splited[1]"/></span>
+                      </div>
+                      <div class="tin-split" style="margin-left: 20px;">
+                          <span><t t-esc="tin_splited[2]"/></span>
+                      </div>
+                      <div class="tin-split" style="margin-left: 20px;letter-spacing:12px!important;">
+                          <span><t t-esc="tin_splited[3]"/></span>
+                      </div>
+                    </div>
+                    
+                    
+                    <!--PAYEEES NAME-->
+                    <div id="payee-name">
+                        <span><t t-esc="docs.partner_id.name"/></span>
+                    </div>
+                    
+                    <!--PAYEEES Address-->
+                    <div id="payee-address">
+                        <span><t t-esc="docs.partner_id.street"/></span>
+                        <span><t t-esc="docs.partner_id.street2"/></span>
+                        <span><t t-esc="docs.partner_id.city_id.name"/></span>
+                    </div>
+                    
+                    <!--PAYEEES ZIP-->
+                    <div id="payee-zipcode">
+                        <span><t t-esc="docs.partner_id.zip"/></span>
+                    </div>
+                    
+                     <!--PAYOR TIN-->
+                    <t t-set="tin_splited" t-value='str(docs.company_id.vat).split("-")'/>
+                    <div id="tax-payor-tin">
+                      <!--<span><t t-esc="docs.partner_id.vat"/></span>-->
+                      <div class="tin-split">
+                          <span><t t-esc="tin_splited[0]"/></span>
+                      </div>
+                      <div class="tin-split" style="margin-left: 20px;">
+                          <span><t t-esc="tin_splited[1]"/></span>
+                      </div>
+                      <div class="tin-split" style="margin-left: 20px;">
+                          <span><t t-esc="tin_splited[2]"/></span>
+                      </div>
+                      <div class="tin-split" style="margin-left: 20px;letter-spacing:12px!important;">
+                          <span><t t-esc="tin_splited[3]"/></span>
+                      </div>
+                    </div>
+                    <!--PAYOR NAME-->
+                    <div id="payor-name">
+                         <span><t t-esc="docs.company_id.name"/></span>
+                    </div>
+                    <!--PAYOR Address-->
+                    <div id="payor-address">
+                        <span><t t-esc="docs.company_id.street"/></span>
+                        <span><t t-esc="docs.company_id.street2"/></span>
+                        <span><t t-esc="docs.company_id.city"/></span>
+                    </div>
+                    <!--PAYOR ZIP-->
+                    <div id="payor-zipcode">
+                        <span><t t-esc="docs.company_id.zip"/></span>
+                    </div>
+                </div>
+                
+                
+            </t>
+            <!--<t t-call="website.layout">-->
+
+        </t>
+    </template>
+
+</odoo>

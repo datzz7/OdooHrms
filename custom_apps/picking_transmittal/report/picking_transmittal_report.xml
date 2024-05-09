@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="picking_transmittal_report_document">
+            <t t-call="picking_transmittal.external_layout_transmittal">
+                <t t-set="o" t-value="o.with_context({'lang':request.env.user.partner_id.lang})"/>
+                <div class="page">
+                    <!-- <h5 style="font-size:15px">
+                        <b>Picking Transmittal</b>
+                    </h5> -->
+                    <br>
+                    </br>
+                    <table class="table table-bordered"
+                            style="font-size:12px;color:black;border: 1px solid black; margin-bottom: 50px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Item</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Reference</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Contact</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Source Document</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Status</b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="count" t-value="1"/>
+                            <tr t-foreach="o.picking_ids" t-as="transmittal">
+                                <td style="text-align:center;" class="autowidth">
+                                    <t t-esc="count"/>
+                                </td>
+                                <td style="text-align:center;" class="autowidth">
+                                    <span t-esc="transmittal.name"/>
+                                </td>
+                                <td style="text-align:center;" class="autowidth">
+                                    <t t-esc="transmittal.partner_id.name"/>
+                                </td>
+                                <td style="text-align:center;" class="autowidth">
+                                    <t t-esc="transmittal.origin"/>
+                                </td>
+                                <td style="text-align:center;">
+                                    <t t-set="values" t-value="dict([('assigned','Ready'),('confirmed','Waiting'), (False,False)])"/> 
+                                    <t t-esc="values[transmittal.state]"/>
+                                </td>
+                                <t t-set="count" t-value="count + 1"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12 mt-2">
+                            <strong>Total Picking Lines :
+                                <span t-esc='len(o.picking_ids)'/>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="picking_transmittal_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="request.env.user.partner_id.lang"/>
+                    <t t-call="picking_transmittal.picking_transmittal_report_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

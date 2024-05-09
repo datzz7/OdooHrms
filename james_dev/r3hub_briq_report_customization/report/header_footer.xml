@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="external_layout_standard_custom" name="external_layout_standard_custom"
+    inherit_id="web.external_layout_standard">
+
+
+    <!-- div[1] is the header of the document to be customize -->
+    <xpath expr="//div[1]" position="replace">
+
+      <div t-attf-class="header" t-att-style="report_header_style">
+      
+          <!--<div class="col-9">-->
+          <!--  <div>-->
+          <!--      <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="width:
+          300px;height:auto;" alt="Logo"/>-->
+          <!--  </div>-->
+
+          <!--</div>-->
+
+          <!--<div class="col-3 text-left" >-->
+          <!--   <div style="width:180px;float:right;">-->
+          <!--     <div class="d-flex flex-row">-->
+
+          <!--     <div>-->
+          <!--       <img-->
+          <!--         t-attf-src="/r3hub_briq_report_customization/static/src/svg/location.svg"-->
+          <!--         style="height: 25px; width: 35px; margin-top: 2px;" />-->
+          <!--     </div>-->
+
+          <!--     <div class="d-inline-flex" style="margin-left:3px;line-height:0.8;">-->
+          <!--       <div-->
+          <!--       style="gap:0;">-->
+          <!--       <span style="font-size:13px;">-->
+          <!--          <t t-esc="company.partner_id.street +' '+ company.partner_id.street2 +' '+
+          company.partner_id.city" />-->
+          <!--       </span>-->
+
+
+          <!--       </div>-->
+
+
+          <!--     </div>-->
+          <!--   </div>-->
+
+          <!--     <div style="margin-top:5px;">-->
+          <!--       <div class="d-inline w-auto">-->
+          <!--           <img-->
+          <!--             t-attf-src="/r3hub_briq_report_customization/static/src/svg/phone.svg"-->
+          <!--             style="height: 25px; width: 35px; margin-top: 2px;" />-->
+          <!--         </div>-->
+
+          <!--         <div class="d-inline w-auto">-->
+          <!--           <span style="font-size:13px;" t-field="company.partner_id.phone" />-->
+
+          <!--         </div>-->
+          <!--     </div>-->
+
+          <!--    <div style="margin-top:5px;">-->
+          <!--      <div class="d-inline w-auto">-->
+          <!--           <img-->
+          <!--             t-attf-src="/r3hub_briq_report_customization/static/src/svg/mail.svg"-->
+          <!--             style="height: 25px; width: 30px; margin-top: 2px;" />-->
+          <!--         </div>-->
+
+          <!--         <div class="d-inline w-auto">-->
+          <!--           <span style="font-size:13px;" t-field="company.partner_id.email" />-->
+
+          <!--         </div>-->
+          <!--    </div>-->
+
+
+          <!--     </div>-->
+
+
+          <!--</div>-->
+          <div style="margin:0;padding:0;">
+            <img style="height:auto;width:100%;margin:0!important;padding:0!important;" t-attf-src="/r3hub_briq_report_customization/static/src/png/header.png" alt="Logo"/>
+          </div>
+
+        
+      </div>
+    </xpath>
+
+
+    <xpath expr="//div[@t-attf-class='article o_report_layout_standard o_company_#{company.id}_layout']/div[@class='pt-5']" position="replace">
+
+      <div style="margin:0;">
+        <!--This div ensures that the address is not cropped by the header. -->
+        <t t-call="web.address_layout"/>
+      </div>
+
+
+    </xpath>
+    <!-- div[3] is the footer of the document to be customize -->
+    <xpath expr="//div[3]" position="replace">
+      <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">        
+        <div t-if="report_type == 'pdf'" class="text-muted">
+          <div class="row">
+            <div class="col-6 text-right">
+              Page:
+            </div>
+            <div class="col-6 text-left pl-0">
+              <span class="page"/> / <span class="topage"/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </xpath>
+
+  </template>
+
+</odoo>

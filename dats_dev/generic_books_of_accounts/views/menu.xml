@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="briq_books_parent_menu"
+        name="Books of Accounts"
+        parent="account.menu_finance_reports"
+        sequence="15"/>
+
+    <menuitem
+        id="briq_sales_book_menu"
+        name="Sales Book"
+        action="generic_books_of_accounts.sales_book_action"
+        parent="generic_books_of_accounts.briq_books_parent_menu"
+        sequence="10"/>
+    
+    <menuitem
+        id="briq_purchases_book_menu"
+        name="Purchases Book"
+        parent="generic_books_of_accounts.briq_books_parent_menu"
+        action="generic_books_of_accounts.purchases_book_action"
+        sequence="15"/>
+
+    <menuitem
+        id="briq_receipts_book_menu"
+        name="Receipts Book"
+        action="generic_books_of_accounts.sales_receipts_book_action"
+        parent="generic_books_of_accounts.briq_books_parent_menu"
+        sequence="20"/>
+
+    <menuitem
+        id="briq_disbursements_book_menu"
+        name="Disbursements Book"
+        action="generic_books_of_accounts.disbursements_book_action"
+        parent="generic_books_of_accounts.briq_books_parent_menu"
+        sequence="25"/>
+
+    <menuitem
+        id="briq_general_journal_menu"
+        name="General Journal"
+        parent="generic_books_of_accounts.briq_books_parent_menu"
+        action="generic_books_of_accounts.general_ledger_book_action"
+        sequence="30"/>
+
+        
+</odoo>

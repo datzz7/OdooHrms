@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_saleorder_document_inherit" name="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+      <xpath expr="//t[@t-foreach='doc.order_line']" position="before">
+        <t t-set="count" t-value="1"/>
+      </xpath>
+      <xpath expr="//th[@name='th_description']" position="before">
+
+            <th name="th_counter_item">Item</th>
+
+          
+      </xpath>
+       <xpath expr="//th[@name='th_description']" position="after">
+    
+             <th name="th_model">Model / Warranty</th>
+
+        
+      </xpath>
+
+      <xpath expr="//td[@name='td_name']" position="before">
+     
+           <td name="td_counter_item"><t t-esc="count"/></td>
+     
+          
+           <t t-set="count" t-value="count+1"/>
+      </xpath>
+       <xpath expr="//td[@name='td_name']" position="after">
+       
+            <td name="td_model"><span t-field="line.variant_model_id"/>/<span t-field="line.variant_warranty_id"/></td>
+         
+      </xpath>
+   
+       <xpath expr="//th[@name='th_taxes']" position="replace">
+          <!--Blank-->
+       </xpath>
+    
+                            
+       <xpath expr="//td[@name='td_taxes']" position="replace">
+          <!--Blank-->
+       </xpath>
+    </template>
+
+</odoo>

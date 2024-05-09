@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="wiz_invent_rep_wh_form" model="ir.ui.view">
+        <field name="name">wiz.invent.rep.wh.form</field>
+        <field name="model">wiz.invent.rep.wh</field>
+            <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="warehouse" />
+                        <field name="principal" />
+                    </group>
+                   
+                    <footer>
+                        <button string="Generate" name="action_gen" type="object"></button>
+                        <button string = "Cancel" type="object" special="cancel"/>
+                   </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="wiz_invent_rep_wh_action" model="ir.actions.act_window">
+        <field name="name">Inventory Report per Warehouse</field>
+        <field name="res_model">wiz.invent.rep.wh</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref = 'wiz_invent_rep_wh_form'/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

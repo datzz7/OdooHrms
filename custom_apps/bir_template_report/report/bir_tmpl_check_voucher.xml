@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Regular Size -->
+  <template id="bir_check_voucher_rep" name="bir_check_voucher_rep">
+      <t t-call="web.html_container">
+        <style>
+            table{
+              border-collapse: collapse;
+              table-layout:auto;
+            }
+            
+            *{
+              margin:0;
+              padding:0;
+            }
+            .temp-page{
+              padding: 10px;
+              border:1px black solid;
+              height: 148.5mm;
+              overflow:hidden;
+            }
+            .temp-header{
+              height:32%;
+            }
+            .temp-body{
+              height:68%;
+              margin-top: 5px;
+              border-top: 1px black solid;
+            }
+        </style>
+
+        <div class="temp-page">
+            <div class="temp-header"> 
+                <div id="temp-header-border">
+                    <div style="width:100%;">
+                      <div style="text-align:center;">
+                        <div><strong><t t-esc="docs.company_id.name"/></strong></div>
+                        <div><span><t t-esc="docs.company_id.street"/><t t-esc="docs.company_id.street2"/><t t-esc="docs.company_id.city"/></span></div>
+                        <div><strong>Check Voucher</strong></div>
+                      </div>
+                      <div style='position:absolute;right:20px;top:25px;;'>
+                          <span>CVNO.</span><span><t t-esc='docs.name'/></span>
+                      </div>
+                    </div>
+                    
+                    <div style="width:100%;overflow:auto;">
+                        <div style="overflow:auto;float:right;">
+                          <div style="float:left;"><span>Date</span></div>
+                          <div style="float:left;margin-left:10px;width:100px;border-bottom:1px black solid;"><t t-esc="docs.date"/></div>
+                        </div>
+                        
+                    </div>
+                    <div>
+                      <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>Pay to </span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.partner_id.name"/><div/></div>
+                      </div>
+                    </div>
+                     <div>
+                      <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>TIN </span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.partner_id.vat"/><div/></div>
+                      </div>
+                    </div>
+                     <div>
+                      <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>Address</span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><span><t t-esc="docs.partner_id.street"/></span><div/></div>
+                      </div>
+                    </div>
+                    <div style="width:100%;overflow:auto;">
+                      <div style="overflow:auto;width:80%;float:left;">
+                          <div style="float:left;width:130px;"><span>The Amount of </span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.convert_amount_to_word(docs.amount)"/><div/></div>
+                      </div>
+                      <div style="overflow:auto;width:20%float:left;">
+                          <div style="float:left;"><span>P </span></div>
+                          <div style="float:left;"><div style="width:100px;border-bottom:1px black solid;"><t t-esc="docs.amount"/></div></div>
+                      </div>
+                    </div>
+                    
+                     <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>In Payment of </span></div>
+                          <div style="float:left;width:550px;border-bottom:1px black solid;margin-left:10px;">Not Set<div/></div>
+                      </div>
+                </div>
+            </div>
+            
+            <div class="temp-body">
+                <div style="overflow:auto;">
+                    <div style="width:80%;float:left;">
+                        <div>
+                            <!--FORM OF PAYMENT-->
+                            <div style="margin: 20px 0;"><span>Form of Payment</span></div>
+                            <div style="overflow:auto;margin-bottom:10px;">
+                                <div style="overflow:auto;width:95%;float:right;">
+                                    <div style="overflow:auto;">
+                                      <div style="width:15%;float:left;">Bank</div>
+                                      <div style="border-bottom:1px black solid; width:85%;float:left;"><t t-esc="docs.journal_id.code"/></div>
+                                    </div>
+                                     <div style="overflow:auto;">
+                                        <div style="width:15%;float:left;">Check no: </div>
+                                        <div style="border-bottom:1px black solid; width:100px;float:left;"><div><t t-if="docs.ref"><t t-esc="docs.ref"/></t><t t-else=""><span>not Set</span></t></div></div>
+                                    </div>
+                                    <div style="overflow:auto;">
+                                        <div style="width:15%;float:left;">Check Date: </div>
+                                        <div style="border-bottom:1px black solid; width:100px;float:left;"><div><t t-esc='docs.date'/></div></div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div>
+                              <t t-set="total_amount" t-value="0"/>
+                                <table width="100%" style="min-height:150px;">
+                                    <thead style="border-top:1px black solid;border-bottom:1px black solid;">
+                                        <th width="33.33%">
+                                            Code
+                                        </th>
+                                        <th width="33.33%">
+                                            Account Debited
+                                        </th>
+                                        <th width="33.33%">
+                                            Amount
+                                        </th>
+                                    </thead>
+                                    
+                                    <tbody>
+                                      <div>
+                                      
+                                      </div>
+                                       <t t-foreach="docs.move_id.line_ids" t-as="jour_ent_line">
+                                         <t t-set="amount_set" t-value="0"/>
+                                         <tr>
+                                           <td width="33.33%"/>
+                                           <td width="33.33%"><t t-esc="jour_ent_line.account_id.name"/></td>
+                                           <td width="33.33%" style="text-align:right;">
+                                               <div>
+                                                   <t t-if="jour_ent_line.debit &gt; 0">
+                                                   <t t-esc="jour_ent_line.debit"/>
+                                                   <t t-set="amount_set" t-value="jour_ent_line.debit"/>
+                                               </t>
+                                               <t t-elif="jour_ent_line.credit &gt; 0">
+                                                    <t t-esc="jour_ent_line.credit"/>
+                                                    <t t-set="amount_set" t-value="jour_ent_line.credit"/>
+                                               </t>
+                                               <t t-else="">
+                                                  0
+                                               </t>
+                                                
+                                               <t t-set="total_amount" t-value="total_amount+amount_set"/>
+                                                  
+                                               </div>
+                                                
+                                           </td>
+                                         </tr>
+                                      </t>
+                                    
+                                </tbody>
+                                <tfoot style="border-top:1px black solid;">
+                                    <td colspan="3">
+                                      <div style="overflow:auto;">
+                                        <div style="float:right;">
+                                            <span style="margin-right:100px;">TOTAL: </span>
+                                            <t t-esc="total_amount"/>
+                                        </div>
+                                      </div>
+                                        
+                                    </td>
+                                </tfoot>
+                                </table>
+                                
+                            </div>
+                        </div>
+                        <div/>
+                    </div>
+                    <div style="width:20%;float:left;">
+                        <div style="width:100%;border-left:1px black solid;min-height:100%;height:100%;">
+                          <div style='width:100%;min-height:20%;height:20%;position:relative;'>
+                              <div style='position:absolute;top:5px;width:100%;'><span>Prepared by:</span></div>
+                              <div  style='position:absolute;bottom:5px;width:100%;'><div  style="width:100%;border-bottom:1px black solid;"><span></span></div></div>
+                          </div>
+                          <div style='width:100%;min-height:20%;height:20%;position:relative;'>
+                              <div style='position:absolute;top:5px;width:100%;'><span>Checked by:</span></div>
+                              <div  style='position:absolute;bottom:5px;width:100%;'><div  style="width:100%;border-bottom:1px black solid;"><span></span></div></div>
+                          </div>
+                          <div style='width:100%;min-height:20%;height:20%;position:relative;'>
+                              <div style='position:absolute;top:5px;width:100%;'><span>Aproved by:</span></div>
+                              <div  style='position:absolute;bottom:5px;width:100%;'><div  style="width:100%;border-bottom:1px black solid;"><span></span></div></div>
+                          </div>
+                          <div style='width:100%;min-height:20%;height:20%;position:relative;'>
+                              <div style='position:absolute;top:5px;width:100%;'><span>Received Payment</span></div>
+                              <div  style='position:absolute;bottom:5px;width:100%;'><div  style="width:100%;border-bottom:1px black solid;"><span></span></div></div>
+                          </div>
+                          <div style='width:100%;min-height:20%;height:20%;position:relative;'>
+                              <div style='position:absolute;top:5px;width:100%;'><span>Date Receieved:</span></div>
+                              <div  style='position:absolute;bottom:5px;width:100%;'><div  style="width:100%;border-bottom:1px black solid;"><span></span></div></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="temp-footer">
+              
+            </div>
+        </div>
+        
+      </t>
+  </template>
+
+  <!-- Full Size -->
+  <template id="bir_check_voucher_rep_full" name="bir_check_voucher_rep_full">
+   <t t-call="web.html_container">
+         <style>
+            table{
+              border-collapse: collapse;
+              table-layout:auto;
+            }
+            
+            *{
+              margin:0;
+              padding:0;
+            }
+            .temp-page{
+              padding: 10px;
+              border:1px black solid;
+              height:297mm;
+              overflow:hidden;
+            }
+            .temp-header{
+              height:20%;
+            }
+            .temp-body{
+              height:70%;
+              margin-top: 5px;
+              border-top: 1px black solid;
+            }
+            .temp-footer{
+              height:10%;
+              margin-top: 5px;
+              border-top: 1px black solid;
+            }
+            .fixed-table{
+              width: 100%;
+              table-layout: fixed;
+              margin-bottom: 20px;
+              
+            }
+            .fixed-table td {
+              width:auto;
+              text-align:center;
+            }
+            .fixed-table thead th{
+              border-top :1px black solid;
+              border-bottom: 1px black solid;
+              text-align:center;
+            }
+            .fixed-table tfoot td{
+              background-color: #A8A196;
+            }
+        </style>
+
+        <div class="temp-page">
+            <div class="temp-header"> 
+                <div id="temp-header-border">
+                    <div style="width:100%;">
+                      <div style="text-align:center;">
+                        <div><strong><t t-esc="docs.company_id.name"/></strong></div>
+                        <div><span><t t-esc="docs.company_id.street"/><t t-esc="docs.company_id.street2"/><t t-esc="docs.company_id.city"/></span></div>
+                        <div><strong>Check Voucher</strong></div>
+                      </div>
+                      <div style="position:absolute;right:20px;top:25px;;">
+                          <span>CVNO.</span><span><t t-esc="docs.name"/></span>
+                      </div>
+                    </div>
+                    
+                    <div style="width:100%;overflow:auto;">
+                        <div style="overflow:auto;float:right;">
+                          <div style="float:left;"><span>Date</span></div>
+                          <div style="float:left;margin-left:10px;width:100px;border-bottom:1px black solid;"><t t-esc="docs.date"/></div>
+                        </div>
+                        
+                    </div>
+                    <div>
+                      <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>Pay to </span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.partner_id.name"/><div/></div>
+                      </div>
+                    </div>
+                     <div>
+                      <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>TIN </span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.partner_id.vat"/><div/></div>
+                      </div>
+                    </div>
+                     <div>
+                      <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>Address</span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><span><t t-esc="docs.partner_id.street"/></span><div/></div>
+                      </div>
+                    </div>
+                    <div style="width:100%;overflow:auto;">
+                      <div style="overflow:auto;width:80%;float:left;">
+                          <div style="float:left;width:130px;"><span>The Amount of </span></div>
+                          <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.convert_amount_to_word(docs.amount)"/><div/></div>
+                      </div>
+                      <div style="overflow:auto;width:20%float:left;">
+                          <!--<div style="float:left;"><span>P </span></div>-->
+                          <div style="float:left;"><div style="width:100px;border-bottom:1px black solid;"><t t-esc="'P{:,.2f}'.format(docs.amount)"/></div></div>
+                      </div>
+                    </div>
+                    
+                     <div style="overflow:auto;width:100%;">
+                          <div style="float:left;width:130px;"><span>In Payment of </span></div>
+                          <div style="float:left;width:550px;border-bottom:1px black solid;margin-left:10px;">Not Set<div/></div>
+                      </div>
+                </div>
+            </div>
+            
+            <div class="temp-body">
+                <div style="overflow:auto;">
+                    <div style="width:80%;float:left;">
+                        <div>
+                            <!--FORM OF PAYMENT-->
+                            <div style="margin: 20px 0;"><span>Form of Payment</span></div>
+                            <div style="overflow:auto;margin-bottom:10px;">
+                                <div style="overflow:auto;width:95%;float:right;">
+                                    <div style="overflow:auto;">
+                                      <div style="width:15%;float:left;">Bank</div>
+                                      <div style="border-bottom:1px black solid; width:85%;float:left;"><t t-esc="docs.journal_id.code"/></div>
+                                    </div>
+                                     <div style="overflow:auto;">
+                                        <div style="width:15%;float:left;">Check no: </div>
+                                        <div style="border-bottom:1px black solid; width:200px;float:left;"><div><t t-if="docs.ref"><t t-esc="docs.ref"/></t><t t-else=""><span>not Set</span></t></div></div>
+                                    </div>
+                                    <div style="overflow:auto;">
+                                        <div style="width:15%;float:left;">Check Date: </div>
+                                        <div style="border-bottom:1px black solid; width:100px;float:left;"><div><t t-esc="docs.date"/></div></div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <!--INVOICES PAID-->
+                            <table class = "fixed-table">
+                            <thead>
+                                <th>Invoice #</th>
+                                <th>Invoice Date</th>
+                                <th>Reference</th>
+                                <th>Amount Due</th>
+                                <th>Check Amount</th>
+                            </thead>
+
+                            <tbody>
+                                <tr t-foreach="docs.reconcile_invoice_ids" t-as="check_lines">
+                                    
+                                        <td>
+                                            <span t-field="check_lines.invoice_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="check_lines.invoice_id.invoice_date"/>
+                                        </td>
+                                        <td>
+                                           <span t-field ="check_lines.invoice_id.ref"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{:,.2f}'.format(check_lines.amount_residual)"/> 
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{:,.2f}'.format(check_lines.amount_paid)"/>
+                                        </td>
+                                  
+                                </tr>
+                                
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                    <td colspan="4">TOTAL</td>
+                                    <td>
+                                        <span t-esc="'{:,.2f}'.format(docs.check_amount)"/>
+                                      
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                       
+                            
+                            <div>
+                              <t t-set="total_debit_amount" t-value="0"/>
+                              <t t-set="total_credit_amount" t-value="0"/>
+                                <table class='fixed-table' >
+                                    <thead>
+                                        <th>
+                                            Code
+                                        </th>
+                                        <th>
+                                            Account
+                                        </th>
+                                        <th>
+                                            Debit
+                                        </th>
+                                        <th>
+                                            Credit
+                                        </th>
+                                    </thead>
+                                    
+                                    <tbody>
+                                      
+                                       <t t-foreach="docs.move_id.line_ids" t-as="jour_ent_line">
+                                         <t t-set="amount_set" t-value="0"/>
+                                         <tr>
+                                           <td><t t-esc="jour_ent_line.account_id.code"/>-<t t-esc="jour_ent_line.account_id.name"/></td>
+                                           <td ><t t-esc="jour_ent_line.account_id.name"/></td>
+                                          
+                                           <td>
+                                              <t t-esc="'{:,.2f}'.format(jour_ent_line.debit)"/>
+                                                   <t t-set="total_debit_amount" t-value="total_debit_amount+jour_ent_line.debit"/>
+                                           </td>
+                                           <td>
+                                             <t t-esc="'{:,.2f}'.format(jour_ent_line.credit)"/>
+                                                    <t t-set="total_credit_amount" t-value="total_credit_amount+jour_ent_line.credit"/>
+                                              
+                                           </td>
+                                         </tr>
+                                      </t>
+                                    
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                      <td colspan="2">
+                                      <div>
+                                        <div>
+                                            <span style="margin-right:100px;">TOTAL: </span>
+                                        </div>
+                                      </div>
+                                        <td>
+                                          <t t-esc="'{:,.2f}'.format(total_debit_amount)"/>
+                                        </td>
+                                        <td>
+                                          <t t-esc="'{:,.2f}'.format(total_credit_amount)"/>
+                                        </td>
+                                    </td>
+                                    </tr>
+                                   
+                                </tfoot>
+                                </table>
+                                
+                            </div>
+                        </div>
+                        <div/>
+                    </div>
+                    <!--<div style="width:20%;float:left;">-->
+                    <!--    <div style="width:100%;border-left:1px black solid;min-height:100%;height:100%;">-->
+                    <!--      <div style="width:100%;min-height:20%;height:20%;position:relative;">-->
+                    <!--          <div style="position:absolute;top:5px;width:100%;"><span>Prepared by:</span></div>-->
+                    <!--          <div style="position:absolute;bottom:5px;width:100%;"><div style="width:100%;border-bottom:1px black solid;"><span/></div></div>-->
+                    <!--      </div>-->
+                    <!--      <div style="width:100%;min-height:20%;height:20%;position:relative;">-->
+                    <!--          <div style="position:absolute;top:5px;width:100%;"><span>Checked by:</span></div>-->
+                    <!--          <div style="position:absolute;bottom:5px;width:100%;"><div style="width:100%;border-bottom:1px black solid;"><span/></div></div>-->
+                    <!--      </div>-->
+                    <!--      <div style="width:100%;min-height:20%;height:20%;position:relative;">-->
+                    <!--          <div style="position:absolute;top:5px;width:100%;"><span>Aproved by:</span></div>-->
+                    <!--          <div style="position:absolute;bottom:5px;width:100%;"><div style="width:100%;border-bottom:1px black solid;"><span/></div></div>-->
+                    <!--      </div>-->
+                    <!--      <div style="width:100%;min-height:20%;height:20%;position:relative;">-->
+                    <!--          <div style="position:absolute;top:5px;width:100%;"><span>Received Payment</span></div>-->
+                    <!--          <div style="position:absolute;bottom:5px;width:100%;"><div style="width:100%;border-bottom:1px black solid;"><span/></div></div>-->
+                    <!--      </div>-->
+                    <!--      <div style="width:100%;min-height:20%;height:20%;position:relative;">-->
+                    <!--          <div style="position:absolute;top:5px;width:100%;"><span>Date Receieved:</span></div>-->
+                    <!--          <div style="position:absolute;bottom:5px;width:100%;"><div style="width:100%;border-bottom:1px black solid;"><span/></div></div>-->
+                    <!--      </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                    <div style="width:20%;float:left;height:40%;max-height:40%;">
+                        <div style="width:100%;border-left:1px black solid;min-height:100%;height:100%;">
+                          <div style="width:100%;min-height:20%;height:20%;position:relative;">
+                              <div style="display:block;width:100%;"><span>Prepared by:</span></div>
+                              <div style="display:block;width:100%;"><div style="width:100%;border-bottom:1px black solid;height:40px;max-height:100%;padding:0;overflow:hidden;"><span style="position:absolute;overflow:hidden;max-height:100%;bottom:0;"/></div></div>
+                          </div>
+                          <div style="width:100%;min-height:20%;height:20%;position:relative;">
+                              <div style="display:block;width:100%;"><span>Checked by:</span></div>
+                              <div style="display:block;width:100%;"><div style="width:100%;border-bottom:1px black solid;height:40px;max-height:100%;padding:0;overflow:hidden;"><span style="position:absolute;overflow:hidden;max-height:100%;bottom:0;"/></div></div>
+                          </div>
+                          <div style="width:100%;min-height:20%;height:20%;position:relative;">
+                              <div style="display:block;width:100%;"><span>Aproved by:</span></div>
+                              <div style="display:block;width:100%;"><div style="width:100%;border-bottom:1px black solid;height:40px;max-height:100%;padding:0;overflow:hidden;"><span style="position:absolute;overflow:hidden;max-height:100%;bottom:0;"/></div></div>
+                          </div>
+                          <div style="width:100%;min-height:20%;height:20%;position:relative;">
+                              <div style="display:block;width:100%;"><span>Received Payment</span></div>
+                              <div style="display:block;width:100%;"><div style="width:100%;border-bottom:1px black solid;height:40px;max-height:100%;padding:0;overflow:hidden;"><span style="position:absolute;overflow:hidden;max-height:100%;bottom:0;"/></div></div>
+                          </div>
+                          <div style="width:100%;min-height:20%;height:20%;position:relative;">
+                              <div style="display:block;width:100%;"><span>Date Receieved:</span></div>
+                              <div style="display:block;width:100%;"><div style="width:100%;border-bottom:1px black solid;height:40px;max-height:100%;padding:0;overflow:hidden;"><span style="position:absolute;overflow:hidden;max-height:100%;bottom:0;"/></div></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="temp-footer">
+               <div style="min-height:100%;font-size:10px;">
+                    <div>
+                        <div style="width:100%;">
+                          <div style="width:50%;margin:auto;text-align:center;">
+                            <span>"THIS DOCUMENT IS NOT VALID SOURCE FOR CLAIMING OF INPUT TAX"</span>
+                            <span>"THIS ACCOUNTS PAYABLE SHALL BE VALID FOR FIVE(5) YEARS FROM DATE OF ATP"</span>
+                          </div>
+                          
+                        </div>
+                        <div>
+                            <div style="width:33.33%;float:left;">
+                                <div><span>BIR Permit to use No:</span></div>
+                                <div><span>Effective Date:</span></div>
+                            </div>
+                            <div style="width:33.33%;float:left;">
+                                <div><span>Valid Until:</span></div>
+                            </div>
+                            <div style="width:33.33%;float:left;">
+                                <div><span>Range of Series: BGAP0000000001 to BGAP9999999999</span></div>
+                                <div><span>Helix ERP Version 4.2</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      </t>
+  </template>
+</odoo>

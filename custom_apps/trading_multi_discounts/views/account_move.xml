@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_move_multi_discount_form" model="ir.ui.view">
+        <field name="name">account.move.multi.discount.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after">
+                <field name="principal_discount"/>
+                <field name="company_discount"/>
+                <field name="principal_discount_amount" force_save="1"/>
+                <field name="company_discount_amount" force_save="1"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='price_unit']" position="after">
+                <field name="principal_discount"/>
+                <field name="company_discount"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

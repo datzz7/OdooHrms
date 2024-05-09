@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Sales/Configuration/Products -->
+    <menuitem
+        id="product_variant_model_menu"
+        name="Model"
+        action="da_product_variant_extend.product_variant_model_action"
+        parent="sale.prod_config_main"
+        sequence="50"/>
+
+    <menuitem
+        id="product_variant_warranty_menu"
+        name="Warranty"
+        action="da_product_variant_extend.product_variant_warranty_action"
+        parent="sale.prod_config_main"
+        sequence="55"/>
+
+    <!-- Inventory/Configuration/Products -->
+    <menuitem
+        id="product_variant_model_menu"
+        name="Model"
+        action="da_product_variant_extend.product_variant_model_action"
+        parent="stock.menu_product_in_config_stock"
+        sequence="50"/>
+
+    <menuitem
+        id="product_variant_warranty_menu"
+        name="Warranty"
+        action="da_product_variant_extend.product_variant_warranty_action"
+        parent="stock.menu_product_in_config_stock"
+        sequence="55"/>
+</odoo>

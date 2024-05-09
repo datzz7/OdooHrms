@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_color_tree_view" model="ir.ui.view">
+        <field name="name">custom.color.tree.view</field>
+        <field name="model">custom.color</field>
+        <field name="arch" type="xml">
+            <tree string="Custom Color" editable="bottom">
+                <field name="name" string="Color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_color_action" model="ir.actions.act_window">
+        <field name="name">Colors</field>
+        <field name="res_model">custom.color</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="custom_color_menu" name="Colors" parent="sale.prod_config_main" action="custom_color_action"/>
+</odoo>

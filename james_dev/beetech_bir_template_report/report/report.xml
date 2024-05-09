@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bir_external_layout" name="bir_external_layout">
+        <t t-set="company" t-value="env.company"/>
+        <t t-call="web.html_container">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+      
+          
+            <div class="header">
+               <div class="o_background_header">
+                  <div class="float-right">
+                      <!--<h3 class="mt0 text-right" t-field="company.report_header"/>-->
+                      <h2 class="mt-3 mr-5"><span t-field="docs.name"/></h2>
+                  </div>
+                  <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left ml-3 mt-1" alt="Logo"/>
+                  <div class="float-left company_address">
+                    <div>
+                        <strong t-field="company.partner_id.name"/>
+                    </div>
+                    <span t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                </div>
+                  <div class="clearfix mb8"/>
+                </div>
+            </div>
+            <div class="article o_report_layout_background" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                   <t t-raw="0"/>
+            </div>
+            <div class="footer">
+               <div style="min-height:100%;font-size:10px;">
+                  <div>
+                      <div style="width:100%;">
+                        <div style="width:50%;margin:auto;text-align:center;">
+                          <span>"THIS DOCUMENT IS NOT VALID SOURCE FOR CLAIMING OF INPUT TAX"</span>
+                          <span>"THIS ACCOUNTS PAYABLE SHALL BE VALID FOR FIVE(5) YEARS FROM DATE OF ATP"</span>
+                        </div>
+                        
+                      </div>
+                      <!-- <div>
+                          <div style="width:33.33%;float:left;">
+                              <div><span>BIR Permit to use No:</span></div>
+                              <div><span>Effective Date:</span></div>
+                          </div>
+                          <div style="width:33.33%;float:left;">
+                              <div><span>Valid Until:</span></div>
+                          </div>
+                          <div style="width:33.33%;float:left;">
+                              <div><span>Range of Series: BGAP0000000001 to BGAP9999999999</span></div>
+                              <div><span>Helix ERP Version 4.2</span></div>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+            </div>
+            
+        </t>
+    </template>
+    <template id="bir_external_layout_clean" name="bir_external_layout_clean">
+        <t t-set="company" t-value="env.company"/>
+        <t t-call="web.html_container">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+            <div class="header">
+               <div class="o_background_header">
+                  <div class="float-right">
+                      <!--<h3 class="mt0 text-right" t-field="company.report_header"/>-->
+                      <!-- <h2 class="mt-3 mr-5"><span t-field="docs.name"/></h2> -->
+                  </div>
+                  <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left ml-3 mt-1" alt="Logo"/>
+                  <div class="float-left company_address">
+                    <div>
+                        <strong t-field="company.partner_id.name"/>
+                    </div>
+                    <span t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                </div>
+                  <div class="clearfix mb8"/>
+            </div>
+            
+           
+            
+            </div>
+          <div class="article o_report_layout_background">
+               <t t-raw="0"/>
+            </div>
+            <div class="footer">
+              <div style="min-height:100%;font-size:10px;">
+                  <div>
+                      <div style="width:100%;">
+                        <div style="width:50%;margin:auto;text-align:center;">
+                          <span>"THIS DOCUMENT IS NOT VALID SOURCE FOR CLAIMING OF INPUT TAX"</span>
+                          <span>"THIS ACCOUNTS PAYABLE SHALL BE VALID FOR FIVE(5) YEARS FROM DATE OF ATP"</span>
+                        </div>
+                        
+                      </div>
+                      <!-- <div>
+                          <div style="width:33.33%;float:left;">
+                              <div><span>BIR Permit to use No:</span></div>
+                              <div><span>Effective Date:</span></div>
+                          </div>
+                          <div style="width:33.33%;float:left;">
+                              <div><span>Valid Until:</span></div>
+                          </div>
+                          <div style="width:33.33%;float:left;">
+                              <div><span>Range of Series: BGAP0000000001 to BGAP9999999999</span></div>
+                              <div><span>Helix ERP Version 4.2</span></div>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+            </div>
+            
+        </t>
+    </template>
+
+    <!-- CUSTOM PAPER FORMAT -->
+    <record id="bir_temp_paperformat" model="report.paperformat">
+        <field name="name">BIR Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <!-- <field name="page_height">149</field>
+        <field name="page_width">210</field> -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="half_a4_format" model="report.paperformat">
+        <field name="name">A5 Landscape (Half of A4 format)</field>
+        <field name="default" eval="True"/>
+        <field name="format">A5</field>
+        <!-- <field name="page_height">149</field>
+        <field name="page_width">210</field> -->
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="bir_2307_temp_paperformat" model="report.paperformat">
+        <field name="name">BIR 2307 Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <!-- <field name="page_height">149</field>
+        <field name="page_width">210</field> -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+     <!-- ACTIONS FOR REPORT -->   
+     <report 
+     id="bir_si_gen"
+     string="BIR Sales Invoice"
+     model="account.move"
+     report_type="qweb-html"
+     name="beetech_bir_template_report.bir_sales_invoice_rep"
+     file="beetech_bir_template_report.bir_sales_invoice_rep"
+     menu="True"
+     paperformat="base.paperformat_euro"
+     />
+
+    <report 
+        id="bir_2307t_gen"
+        string="BIR Witholding 2307"
+        model="account.payment"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_temp_paperformat"
+        file="beetech_bir_template_report.bir_temp_paperformat"
+        menu="True"
+        paperformat="base.paperformat_euro"
+        />
+
+    <report 
+        id="bir_official_receipt_rep_list_gen"
+        string="BIR Official Receipt"
+        model="account.payment"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_official_receipt_rep"
+        file="beetech_bir_template_report.bir_official_receipt_rep"
+        menu="True"
+        paperformat="base.paperformat_euro"
+        />
+
+    <report 
+        id="bir_collection_receipt_rep_list_gen"
+        string="BIR Collection Receipt"
+        model="account.payment"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_collection_receipt_rep"
+        file="beetech_bir_template_report.bir_collection_receipt_rep"
+        menu="True"
+        paperformat="base.paperformat_euro"
+        />
+
+        <!-- [NOT APPLICABLE] -->
+    <!-- <report 
+        id="bir_check_voucher_rep_list_gen"
+        string="Check Voucher (Half Page)"
+        model="account.payment"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_check_voucher_rep"
+        file="beetech_bir_template_report.bir_check_voucher_rep"
+        menu="True"
+        paperformat="beetech_bir_template_report.bir_temp_paperformat"
+        /> -->
+
+    <!-- <report 
+        id="bir_check_voucher_rep_list_gen_full"
+        string="Check Voucher (Full Page)"
+        model="account.payment"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_check_voucher_rep_full"
+        file="beetech_bir_template_report.bir_check_voucher_rep_full"
+        menu="True"
+        paperformat="beetech_bir_template_report.bir_temp_paperformat"
+        /> -->
+
+    <report 
+        id="bir_check_voucher"
+        string="Check Voucher"
+        model="account.payment"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_check_voucher_container"
+        file="beetech_bir_template_report.bir_check_voucher_container"
+        menu="True"
+        paperformat="base.paperformat_euro"
+        />
+
+    <report
+        id="bir_composition_cas_rep_gen"
+        string="PAYABLE VOUCHER (1/2 PAGE)"
+        model="account.move"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_comp_cas_apv_rep"
+        file="beetech_bir_template_report.bir_comp_cas_apv_rep"
+        menu="True"
+        paperformat="beetech_bir_template_report.bir_temp_paperformat"
+    />
+
+    <report
+        id="bir_composition_cas_rep_gen_full"
+        string="PAYABLE VOUCHER (FULL PAGE)"
+        model="account.move"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_comp_cas_apv_rep_full"
+        file="beetech_bir_template_report.bir_comp_cas_apv_rep_full"
+        menu="True"
+        paperformat="beetech_bir_template_report.bir_temp_paperformat"
+    />
+
+     <report
+        id="bir_invoice_w_payments_report"
+        string="Invoice with Payments"
+        model="account.move"
+        report_type="qweb-html"
+        name="beetech_bir_template_report.bir_invoice_w_payments"
+        file="beetech_bir_template_report.bir_invoice_w_payments"
+        menu="True"
+        paperformat="beetech_bir_template_report.bir_temp_paperformat"
+    />
+
+</odoo>

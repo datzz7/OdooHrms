@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="invoice_dispatch_report_document">
+            <t t-call="invoice_dispatch_fleet.external_layout_dispatch">
+                <t t-set="o" t-value="o.with_context({'lang':request.env.user.partner_id.lang})"/>
+                <div class="page">
+                    <h5 style="font-size:15px">
+                        <b>Invoice Dispatched</b>
+                    </h5>
+                    <table class="table table-bordered"
+                           style="font-size:12px;color:black;border: 1px solid black; margin-bottom: 50px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Item</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Invoice No</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Date</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Country/Area</b>
+                                </th>
+                                <th style="text-align:center;" class="autowidth">
+                                    <b>Salesman/Agent</b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="count" t-value="1"/>
+                            <tr t-foreach="o.invoice_ids" t-as="invoice">
+                                <td style="text-align:center;" class="autowidth">
+                                    <t t-esc="count"/>
+                                </td>
+                                <td style="text-align:center;" class="autowidth">
+                                    <span t-esc="invoice.name"/>
+                                </td>
+                                <td style="text-align:center;" class="autowidth">
+                                    <t t-esc="invoice.invoice_date"/>
+                                </td>
+                                <td style="text-align:center;" class="autowidth">
+                                    <t t-esc="invoice.area_country_id.country_id.name"/>
+                                </td>
+                                <td style="text-align:center;">
+                                    <t t-esc="invoice.invoice_user_id.name"/>
+                                </td>
+                                <t t-set="count" t-value="count + 1"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12 mt-2">
+                            <strong>Total Invoice Lines :
+                                <span t-esc='len(o.invoice_ids)'/>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="invoice_dispatch_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="request.env.user.partner_id.lang"/>
+                    <t t-call="invoice_dispatch_fleet.invoice_dispatch_report_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

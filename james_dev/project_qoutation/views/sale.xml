@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_proj_qout_sale_open_settings" model="ir.actions.act_window">
+            <field name="name">Project Qoutaiton</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="target">inline</field> -->
+            <field name="context" eval="{'default_sale_type': 'project'}"/>
+            <field name="domain">[('sale_type','=','project')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('sale.view_order_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('sale.view_order_form')})]"/>
+    </record>
+
+
+    <record id="view_order_form_inherit_project_qoutation" model="ir.ui.view">
+        <field name="name">	sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="sale_type" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

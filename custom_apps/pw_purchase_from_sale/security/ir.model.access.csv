@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pw_purchase_from_sale.access_purchase_order_wizard,access_purchase_order_wizard,pw_purchase_from_sale.model_purchase_order_wizard,base.group_user,1,1,1,1
+pw_purchase_from_sale.access_purchase_order_line_wizard,access_purchase_order_line_wizard,pw_purchase_from_sale.model_purchase_order_line_wizard,base.group_user,1,1,1,1

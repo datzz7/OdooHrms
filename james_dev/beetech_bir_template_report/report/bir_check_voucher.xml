@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+  <template id="bir_check_voucher_content" name="bir_check_voucher_content">
+    <div class="row">
+      <div class="col-8">
+        <div style="padding:20px">
+          <div>Form of Payment</div>
+          <div style="padding-left:10px;">
+            <div class="d-flex">
+              <div style="width:30%"> <span>Bank </span></div>
+              <div style="width:70%;border-bottom:1px black solid;"/>
+            </div>
+            <div class="d-flex">
+              <div style="width:30%"> <span>Check No</span></div>
+              <div style="width:70%;border-bottom:1px black solid;"/>
+            </div>
+            <div class="d-flex">
+              <div style="width:30%"> <span>Check Date</span></div>
+              <div style="width:70%;border-bottom:1px black solid;"/>
+            </div>
+            
+          </div>
+        </div>
+        <div>
+          <table class="table table-sm table-striped mb-2">
+            <thead>
+              <tr>
+                <th>Invoice #</th>
+                <th>Invoice Date</th>
+                <th>Reference</th>
+                <th>Amount Due</th>
+                <th>Amount Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                      <!--[RECONCILED] CREDIT-->
+                      <t t-if="docs.matched_credit_ids">
+                        <tr t-foreach="docs.matched_credit_ids" t-as="line">
+                                <td>
+                                  <span t-field="line.credit_move_id"/>
+                              </td>
+                              <td>
+                                  <span t-field="line.credit_move_id.date"/>
+                              </td>
+                              <td>
+                                  <span t-field="line.credit_move_id.move_id.ref"/>
+                              </td>
+                              <td>
+                                  <span t-esc="'{:,.2f}'.format(line.credit_move_id.move_id.amount_residual)"/> 
+                              </td>
+                              <td>
+                                  <span t-esc="'{:,.2f}'.format(line.amount)"/>
+                              </td>
+                      </tr>
+                      </t>
+                      <t t-else="">
+                        <tr>
+                          <td/>
+                          <td/>
+                          <td/>
+                          <td/>
+                          <td/>
+                        </tr>
+                      </t>
+                      
+            </tbody>
+          </table>
+          
+          <!--[ENTRIES]-->
+          <t t-set="total_debit_amount" t-value="0"/>
+          <t t-set="total_credit_amount" t-value="0"/>
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Account</th>
+                  <th>Debit</th>
+                  <th>Credit</th>
+              </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="docs.move_id.line_ids" t-as="jour_ent_line">
+                                  <t t-set="amount_set" t-value="0"/>
+                                  <tr>
+                                    <td><t t-esc="jour_ent_line.account_id.code"/>-<t t-esc="jour_ent_line.account_id.name"/></td>
+                                    <td><t t-esc="jour_ent_line.account_id.name"/></td>
+                                  
+                                    <td>
+                                      <t t-esc="'{:,.2f}'.format(jour_ent_line.debit)"/>
+                                            <t t-set="total_debit_amount" t-value="total_debit_amount+jour_ent_line.debit"/>
+                                    </td>
+                                    <td>
+                                      <t t-esc="'{:,.2f}'.format(jour_ent_line.credit)"/>
+                                            <t t-set="total_credit_amount" t-value="total_credit_amount+jour_ent_line.credit"/>
+                                      
+                                    </td>
+                                  </tr>
+                              </t>
+                              
+                <tr>
+                  <td colspan="2"><strong>Total: </strong></td>
+                  <td ><t t-esc="total_debit_amount"/></td>
+                  <td ><t t-esc="total_credit_amount"/></td>
+                </tr>
+          
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-4">
+        <div>
+          <div><span>Prepared By</span></div>
+          <div style="border-bottom:1px black solid;"><span/><br/></div>
+        </div>
+          <div>
+          <div><span>Checked By</span></div>
+          <div style="border-bottom:1px black solid;"><span/><br/></div>
+        </div>
+          <div>
+          <div><span>Approved By</span></div>
+          <div style="border-bottom:1px black solid;"><span/><br/></div>
+        </div>
+          <div>
+          <div><span>Received Payment</span></div>
+          <div style="border-bottom:1px black solid;"><span/><br/></div>
+        </div>
+          <div>
+          <div><span>Date Received</span></div>
+          <div style="border-bottom:1px black solid;"><span/><br/></div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <template id="bir_check_voucher_container" name="bir_check_voucher_container">
+    <t t-call="beetech_bir_template_report.bir_external_layout_clean">
+      <style>
+        table{
+          border-collapse: collapse;
+          table-layout:auto;
+        }
+        
+        *{
+          margin:0;
+          padding:0;
+        }
+        .temp-page{
+          padding: 10px;
+          <!--border:1px black solid;-->
+          <!--height:297mm;-->
+        
+        }
+        .temp-header{
+          height:20%;
+        }
+        .temp-body{
+          height:70%;
+          margin-top: 5px;
+          border-top: 1px black solid;
+        }
+        <!--.temp-footer{-->
+        <!--  height:10%;-->
+        <!--  margin-top: 5px;-->
+        <!--  border-top: 1px black solid;-->
+        <!--}-->
+        .fixed-table{
+          width: 100%;
+          table-layout: fixed;
+          margin-bottom: 20px;
+          
+        }
+        .fixed-table td {
+          width:auto;
+          text-align:center;
+        }
+        .fixed-table thead th{
+          border-top :1px black solid;
+          border-bottom: 1px black solid;
+          text-align:center;
+        }
+        .fixed-table tfoot td{
+          background-color: #A8A196;
+        }
+    </style>
+    <div class="page">
+        <div class="temp-header"> 
+            <div id="temp-header-border">
+                <div style="width:100%;">
+                  <div style="text-align:center;">
+                    <div style="background-color: #f9f3f7;"><strong>Check Voucher</strong></div>
+                  </div>
+                </div>                 
+                <div style="width:100%;overflow:auto;">
+                    <div style="position:relative;height:30px;">
+                      <div style="position:absolute;left:1px">
+                        <strong><span>CVNO.</span><span><t t-esc="docs.name"/></span></strong>
+                      </div>
+                      <div style="position:absolute;right:1px">
+                        <div class="d-inline-flex"><span>Date</span></div>
+                        <div class="d-inline-flex" style="width:100px;border-bottom:1px black solid;"><t t-esc="docs.date"/></div>
+                    </div>
+                    </div>
+                </div>
+                <div>
+                  <div style="overflow:auto;width:100%;">
+                      <div style="float:left;width:130px;"><span>Pay to </span></div>
+                      <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.partner_id.name"/><div/></div>
+                  </div>
+                </div>
+                  <div>
+                  <div style="overflow:auto;width:100%;">
+                      <div style="float:left;width:130px;"><span>TIN </span></div>
+                      <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.partner_id.vat"/><div/></div>
+                  </div>
+                </div>
+                  <div>
+                  <div style="overflow:auto;width:100%;">
+                      <div style="float:left;width:130px;"><span>Address</span></div>
+                      <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><span><t t-esc="docs.partner_id.street"/></span><div/></div>
+                  </div>
+                </div>
+                <div style="width:100%;overflow:auto;">
+                  <div style="overflow:auto;width:80%;float:left;">
+                      <div style="float:left;width:130px;"><span>The Amount of </span></div>
+                      <div style="float:left;width:500px;border-bottom:1px black solid;margin-left:10px;"><t t-esc="docs.convert_amount_to_word(docs.amount)"/><div/></div>
+                  </div>
+                  <div style="overflow:auto;width:20%float:left;">
+                      <!--<div style="float:left;"><span>P </span></div>-->
+                      <div style="float:left;"><div style="width:100px;border-bottom:1px black solid;"><t t-esc="'P{:,.2f}'.format(docs.amount)"/></div></div>
+                  </div>
+                </div>
+                
+                  <div style="overflow:auto;width:100%;">
+                      <div style="float:left;width:130px;"><span>In Payment of </span></div>
+                      <div style="float:left;width:550px;border-bottom:1px black solid;margin-left:10px;">Not Set<div/></div>
+                  </div>
+            </div>
+        </div>
+        
+        <div class="temp-body" style="page-break-after: always;">
+            <t t-call="beetech_bir_template_report.bir_check_voucher_content"/>
+        </div>  
+    </div>     
+    </t>           
+  </template>
+</odoo>

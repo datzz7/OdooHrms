@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="da_product_variant_sale_order_inherit_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="tin_no" attrs="{'readonly': [('state', '!=','draft')]}"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="before">
+                <group name="note_group" col="4" class="mt-2 mt-md-0">
+                    <!-- <label for="project_details">Project / Order Info</label> -->
+                    <group string="Project / Order Info" colspan="2">
+                        <field name="project_details" nolabel="1" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

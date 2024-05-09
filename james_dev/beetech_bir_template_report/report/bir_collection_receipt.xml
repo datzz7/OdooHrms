@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="bir_collection_receipt_rep">
+         <t t-call="web.html_container">
+          <style>
+              .temp-page{
+                padding: 20px;
+                border:1px black solid;
+                height: 148.5mm;
+                overflow:hidden;
+              }
+              .temp-header{
+              }
+              .temp-body{
+                margin-top:30px;
+              }
+              .temp-footer{
+              }
+              #company_title_details{
+                text-align:center;
+                height: 
+              }
+          </style>
+          <div class="temp-page">
+              <div class="temp-header">
+                  <div style="width:100%;">
+                      <div id="company_title_details">
+                          <div><strong><t t-esc="docs.company_id.name"/></strong></div>
+                          <div><strong>Address: </strong><strong><t t-esc="docs.company_id.street"/>, <t t-esc="docs.company_id.street2"/>, <t t-esc="docs.company_id.city"/></strong></div>
+                          <div><strong>Telephone: </strong><strong><t t-esc="docs.company_id.phone"/></strong></div>
+                          <div><strong>Fax: </strong></div>
+                          <div><strong>VAT Reg TIN: </strong><strong><t t-esc="docs.company_id.partner_id.vat"/></strong></div>
+                          
+                          <div><span style="font-size: 25px;margin-top:10px;">COLLECTION RECEIPT</span></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="temp-body">
+                  <div>
+                      <div style="width:100%;overflow:auto;">
+                          <div style="float:right;">
+                          <div><span>NO.<t t-esc="docs.name"/></span></div>
+                          <div>
+                            <div style="float:left">
+                              <span>Date</span>
+                            </div>
+                            <div style="float:left">
+                              <div style="border-bottom:1px black solid;width:100px;min-height:20px;">
+                                 <span><t t-esc="docs.date"/></span>
+                              </div>
+                              
+                            </div>
+                          </div>
+                      </div>
+                      </div>
+                      
+                      <div style="width:100%;overflow:auto;">
+                        <div style="width:100%;">
+                          <div style="float:left;width:15%;"><span>Received from: </span></div>
+                          <div style="float:left;width:85%;"><div style="width:100%;border-bottom:1px black solid;min-height:20px;"><span><t t-esc="docs.partner_id.name"/></span></div></div>
+                        </div>
+                        <div style="width:100%;overflow:auto;">
+                            <div style="width:100%;">
+                                <div style="width:40%;float:left;">
+                                    <div style="float:left;width:20%;"><span>with TIN </span></div>
+                                    <div style="float:left;width:80%;"><div style="border-bottom: 1px black solid;min-height:20px;"><span><t t-esc="docs.partner_id.vat"/>
+                                    </span></div></div>
+                                </div>
+                                <div style="width:60%;float:left;">
+                                    <div style="float:left;width:30%;"><span>and address at </span></div>
+                                    <div style="float:left;width:70%;">
+                                      <div style="border-bottom: 1px black solid;min-height:20px;">
+                                          <span><t t-esc="docs.partner_id.street"/>,<t t-esc="docs.partner_id.street2"/>,<t t-esc="docs.partner_id.city"/></span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      
+                      <div style="width:100%;overflow:auto;">
+                          <div>
+                              <div style="width:30%;float:left;">
+                                  <div><span>engaged in the business style of</span></div>
+                              </div>
+                              <div style="width:70%;float:left;">
+                                  <div style="width:100%;border-bottom:1px black solid;min-height:20px;"><span/></div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div style="width:100%;overflow:auto;">
+                          <div>
+                              <div style="width:20%;float:left;"><span>the sum of PESOS </span></div>
+                              <div style="width:80%;float:left;"><div style="border-bottom: 1px black solid;min-height:20px;"><span><t t-esc="docs.convert_amount_to_word(docs.amount)"/></span></div></div>
+                          </div>
+                      </div>
+                      
+                      <div style="width:100%;overflow:auto;">
+                          <div style="width:50%;">
+                            
+                              <div style="width:5%;float:left;"><span>P </span></div>
+                              <div style="width:95%;float:left;"><div style="border-bottom: 1px black solid;min-height:20px;"><span><t t-esc="docs.amount"/></span></div></div>
+                          </div>
+                      </div>
+                      
+                      <div style="width:100%;overflow:auto;">
+                          <div>
+                              <div style="width:15%;float:left;"><span>Check Details </span></div>
+                              <div style="width:85%;float:left;"><div style="border-bottom: 1px black solid;min-height:20px;"><span></span></div></div>
+                          </div>
+                      </div>
+                      
+                      <div style="width:100%;overflow:auto;">
+                          <div>
+                              <div style="width: 5%;float:left;"><span>Cash </span></div>
+                              <div style="width:95%;float:left;"><div style="border-bottom: 1px black solid;min-height:20px;"><span/></div></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="temp-footer">
+                   <div style="width:100%;overflow:auto;margin-top: 10px;">
+                          <div style="width:40%;float:right;">
+                              <div style="width:10%;float:left;"><span>By: </span></div>
+                              <div style="width:90%;float:left;">
+                                <div style="border-bottom: 1px black solid;min-height:20px;">
+                                    <span/>
+                                </div>
+                                <div style="text-align:center;"><span>Cashier/Authorized Representative</span></div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                   <div style="width:100%;overflow:auto;">
+                       <div style="font-size:12px;text-align:center;margin:10px 0;">
+                          <div>
+                            <span>"THIS DOCUMENT IS NOT VALID FOR CLAMMING INPUT TAX"</span>
+                          </div>
+                          <div>
+                            <span>"THIS COLLECTION RECEIPT SHALL BE CALID FOR FIVE (5) YEAR FROM  THE DATE OF ATP"</span>
+                          </div>
+                       </div>
+                   </div>
+                   
+                   <div style="width:100%;overflow:auto;font-size:10px;">
+                      <div>
+                          <div style="float:left;width:20%;">
+                              <div>
+                                <div><span>BIR to use: </span></div>
+                                <div><span/></div>
+                              </div>
+                              <div>
+                                <div><span>Effective Date: </span></div>
+                                <div><span/></div>
+                              </div>
+                          </div>
+                          <div style="float:left;width:50%;">
+                              <div style="position:relative;min-height:30px;">
+                                   <div style="position:absolute;bottom:1px;">
+                                    <div><span>Valid Date: </span></div>
+                                    <div><span/></div>
+                                  </div>
+                              </div>
+                            
+                          </div>
+                          <div style="float:left;width:30%">
+                               <div>
+                                <div><span>Range of Series: </span></div>
+                                <div><span/></div>
+                              </div>
+                               <div>
+                                <div><span>Helix ERP Version 4.2</span></div>
+                              </div>
+                          </div>
+                      </div>
+                   </div>
+              </div>
+          </div>
+       
+        </t>
+    </template>
+
+</odoo>

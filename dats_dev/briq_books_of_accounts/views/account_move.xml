@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="books_of_accounts_account_move_inherit_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="before">
+                <field name="wtax_id" invisible="1"/>
+                <field name="wtax_amount" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

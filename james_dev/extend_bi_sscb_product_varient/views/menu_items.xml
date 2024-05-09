@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Sales/Product/Config -->
+    <menuitem
+        id="product_attr_depart_menu_department"
+        name="Department"
+        action="action_product_attr_department_view_tree"
+        parent="sale.prod_config_main"
+        />
+
+        <menuitem
+        id="product_attr_division_menu_division"
+        name="Division"
+        action="action_product_attr_division_view_tree"
+        parent="sale.prod_config_main"
+        />
+
+        <!-- Inventory/Configuration/Product -->
+        <menuitem
+        id="product_attr_depart_menu_department"
+        name="Department"
+        action="action_product_attr_department_view_tree"
+        parent="stock.menu_product_in_config_stock"
+        />
+
+        <menuitem
+        id="product_attr_division_menu_division"
+        name="Division"
+        action="action_product_attr_division_view_tree"
+        parent="stock.menu_product_in_config_stock"
+        />
+        
+        <menuitem 
+        id="custom_size_menu" 
+        name="Sizes" 
+        parent="stock.menu_product_in_config_stock" 
+        action="bi_sscb_product_varient.custom_size_action"/>
+
+        <menuitem 
+        id="custom_color_menu" 
+        name="Colors" 
+        parent="stock.menu_product_in_config_stock" 
+        action="bi_sscb_product_varient.custom_color_action"/>
+
+        <menuitem 
+        id="custom_brand_menu" 
+        name="Brand" 
+        parent="stock.menu_product_in_config_stock" 
+        action="bi_sscb_product_varient.custom_brand_action"/>
+
+        <menuitem 
+        id="custom_style_menu" 
+        name="Styles" 
+        parent="stock.menu_product_in_config_stock" 
+        action="bi_sscb_product_varient.custom_style_action"/>
+</odoo>

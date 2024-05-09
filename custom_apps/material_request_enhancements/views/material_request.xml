@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="material_request_approval_matrix_inherit_form">
+            <field name="name">material.request.form</field>
+            <field name="model">material.request</field>
+            <field name="inherit_id" ref="material_request.view_material_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='request_date']" position="after">
+                    <field name="analytic_accounts" attrs="{'readonly':[('state','in',['done', 'cancel'])]}"/>
+                    <field name="analytic_tag_ids" widget="many2many_tags" attrs="{'readonly':[('state','in',['done', 'cancel'])]}"/>
+                </xpath>
+
+                <xpath expr="//button[7]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('request_type','not in',['transfer','goods_issue']), ('state','!=','approved')]}</attribute>
+                </xpath>
+
+                <xpath expr="//button[7]" position="after">
+                    <button name="%(material_request.action_create_transfer_wizard)d"
+                        class="oe_highlight"
+                        string="Transfer Material"
+                        type="action"
+                        attrs="{'invisible': ['|', ('request_type','!=','goods_issue'), ('state','!=','approved')]}"
+                        groups="stock.group_stock_manager"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree[1]" position="attributes">
+                    <attribute name="editable">bottom</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="context">{'default_account_analytic_id': parent.analytic_accounts, 'default_analytic_tag_ids': parent.analytic_tag_ids}</attribute>
+                    
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='description']" position="after">
+                    <field name="uom_id" attrs="{'readonly':[('parent.state','in',['done', 'cancel'])]}"/>
+                    <field name="account_analytic_id" attrs="{'readonly':[('parent.state','in',['done', 'cancel'])]}"/>
+                    <field name="analytic_tag_ids" widget="many2many_tags" attrs="{'readonly':[('parent.state','in',['done', 'cancel'])]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='approved_qty']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('parent.state','=','done')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='request_type']" position="replace">
+                    <field name="request_type" invisible="1"/>
+                    <field name="req_type" attrs="{'readonly': [('allow_update','=', False)] , 'required': [('state','=', 'to_approve')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='assigned_to']" position="attributes">
+                    <!-- <attribute name="readonly">True</attribute> -->
+                </xpath>
+
+                <button name="%(material_request.action_create_transfer_wizard)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="material_request.material_request_form_action" model="ir.actions.act_window">
+            <field name="context">{"default_requested_by":uid,'search_default_assigned': 1}</field>
+        </record>
+    </data>
+</odoo>

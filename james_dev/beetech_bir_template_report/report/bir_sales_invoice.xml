@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="bir_sales_invoice_rep" name="bir_sales_invoice_rep">
+      <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+          <style>
+          *{
+            margin:0;
+            padding:0;
+          }
+          
+          .temp-page{
+            padding: 5mm 10mm;
+         
+            border:1px black solid;
+            padding-bottom:0;
+            <!--width:297mm;-->
+          }
+          
+          #no_seq{
+            border:2px black solid;
+            display:inline-block;
+            
+          }
+          #no_seq div{
+            display:inline;
+            
+          }
+          #no_seq div:nth-child(1){
+            background-color:black;
+            color:white;
+            padding: 5px 10px;
+            
+          }
+           #no_seq div:nth-child(2){
+            padding: 5px 10px;
+          
+          }
+          
+          .fixed-table-horizontal{
+            width: 100%;
+            table-layout: fixed;
+            border: 1px black solid;
+          }
+          <!--.fixed-table-horizontal td{-->
+          <!--  border: 1px black solid;-->
+          <!--}-->
+          .fixed-table-horizontal th{
+            background-color:black;
+            color:white;
+            padding-left: 5px;
+          }
+          .fixed-table{
+            width: 100%;
+            table-layout: fixed;
+            border: 1px black solid;
+          }
+          .fixed-table th{
+              background-color:black;
+              color:white;
+              padding-left: 5px;
+          }
+          .fixed-table tbody{
+             min-height:100px;
+              
+          }
+          .fixed-table td{
+             width:auto;
+      
+          }
+          .compant-contact-address div span{
+            font-size: 5px!important;
+          }
+        </style>
+          <div class="page">
+              <div class="temp-page">
+              <div class="temp-header;">
+                  <div>
+                      <h1>PRIMARY DOCUMENT - SALES INVOICE (SI)</h1>
+                  </div>
+                  <div style="width:100%;display:block;">
+                      <div id="company-contact" style="display: inline-block;width:49.5%;border:0">
+                        <div class="compant-contact-title">
+                            COMPANY NAME CORP
+                        </div>
+                        <div class="compant-contact-address;">
+                            <div><span style='font-size:12px;'>Company Address</span></div>
+                            <div><span>Tel No: </span></div>
+                            <div><span>CAT Reg TIN: </span></div>
+                        </div>
+                      </div>
+                      <div style="display: inline-block;width:50%;">
+                        <div style='position:relative;width:100%;height:50px;'>
+                            <div id="no_seq" style="position: absolute;right: 0;bottom:0;">
+                            <div>NO</div>
+                            <div>Sample 12319309213</div>
+                          </div>
+                        </div>
+                          
+                          
+                      </div>
+                  </div>
+                  
+              </div>
+              <div class="temp-body">
+                  <div style="display:block;margin-top:10px;letter-spacing:5px;">SALES INVOICE</div>
+                  <div>
+                      <table class="fixed-table-horizontal">
+                          <tr>
+                              <th>CUSTOMERS</th>
+                              <td/>
+                              <th>DATE</th>
+                              <td/>
+                              
+                          </tr>
+                          <tr>
+                              <th>ADDRESS</th>
+                              <td/>
+                              <th>TERMS</th>
+                              <td/>
+                              
+                          </tr>
+                          <tr>
+                              <th>BUSINESS STYLE</th>
+                              <td/>
+                              <th>TIN</th>
+                              <td/>
+                              
+                          </tr>
+                      </table>
+                      <table class="fixed-table" style="border-bottom:0!important;">
+                          <thead>
+                              <tr>
+                                <th>DESCRIPTON</th>
+                                <th>HEAD/PACKS</th>
+                                <th>WT. (KILOS)</th>
+                                <th>UNIT PRICE</th>
+                                <th>AMOUNT</th>
+                              </tr>
+                          </thead>
+                          
+                          <tbody>
+                                <t t-foreach ="range(5)" t-as='x'>
+                                    <tr style="font-size:12px;">
+                                      <td><span>Descripton</span><t t-esc="x"/></td>
+                                      <td><span>HEAD/PACK</span><t t-esc="x"/></td>
+                                      <td><span>WT. (KILOS)</span><t t-esc="x"/></td>
+                                      <td><span>UNIT PRICE</span><t t-esc="x"/></td>
+                                      <td><span>AMOUNT</span><t t-esc="x"/></td>
+                                    </tr>
+                            
+                                </t>
+                                
+                              
+                          </tbody>
+                          
+                          
+                      </table>
+                      <table class="fixed-table" style="border-top:0!important;">
+                     
+                              <tr>
+                                <td style="border:1px black solid;">
+                                    <div style="font-size:12px;margin:auto 0">
+                                        <span>TERMS: Interest of 1 - 12% per month will be charge on all</span>
+                                        <span>overdue accounts plus 25% of the amount due for attorney's</span>
+                                        <span>fee and expense incase of court action</span>
+                                    </div>
+                                    
+                                </td>
+                                <td style="border:1px black solid;height:auto;position:relative;">
+                                    <!--<div style="border:1px green solid;position:relative;height:100px;">-->
+                                    <!--    <div style="font-size:12px;display:block;height:auto;border:1px red solid;position:absolute;top:0;">-->
+                                    <!--      <span>Received te above goods in good order and</span>-->
+                                    <!--      <span>condition</span>-->
+                                    <!--    </div>-->
+                                    <!--    <div style="font-size:12px;display:block;margin-top:10px;width:100%;border:1px blue solid;position:absolute;bottom:0;">-->
+                                    <!--        <div style="display:inline-block;border:1px green solid">BY:</div>-->
+                                    <!--        <div style="display:inline-block;width:80%%;border-bottom:1px black solid;"></div>-->
+                                    <!--    </div>-->
+                                        
+                                    <!--</div>-->
+                                      
+                                          <div style="font-size:12px;display:block;height:auto;position:absolute;top:0;">
+                                          <span>Received te above goods in good order and</span>
+                                          <span>condition</span>
+                                        </div>
+                                        <div style="font-size:12px;display:block;margin-top:10px;width:100%;position:absolute;top:0;">
+                                            <div style="display:inline-block">BY:</div>
+                                            <div style="display:inline-block;width:80%%;border-bottom:1px black solid;"></div>
+                                        </div>
+                                   
+                                        
+                                        
+                                  
+                                    
+                                </td>
+                                <td>
+                                    <div style="font-size:12px;">
+                                      <div>
+                                          <div><span>VAT Table Sales</span></div>
+                                          <div/>
+                                      </div>
+                                      <div>
+                                          <div><span>VAT Exempt Sales</span></div>
+                                          <div/>
+                                      </div>
+                                      <div>
+                                          <div><span>VAT Zero-Rated</span></div>
+                                          <div/>
+                                      </div>
+                                      <div>
+                                          <div><span>VAT 12%</span></div>
+                                          <div/>
+                                      </div>
+                                      <div>
+                                          <div><span>TOTAL SALES</span></div>
+                                          <div/>
+                                      </div>                                        
+                                    </div>
+
+                                </td>
+                            </tr>
+                          
+                      </table>
+                  </div>
+              </div>
+              <div class="temp-footer">
+                  <div>
+                      <table class="fixed-table" style="font-size: 10px;border:0!important;">
+                          <tr>
+                              <td style="position:relative;">
+                                  <div style="position:absolute;bottom:0;">
+                                    <div style="display:inline-block;width:auto;vertical-align: baseline;">
+                                      <div>BIT Permit to user No:</div>
+                                      <div>effective Date:</div>
+                                    </div>
+                                    <div style="display:inline-block;width:auto;">
+                                        <div>Valid Until: </div>
+                                    </div>                                      
+                                  </div>
+
+                              </td>
+                              <td style="text-align:center;">
+                                  
+                                  <div style="text-decoration: underline;">"THIS SALES INVOICE SHALL BE VALID FOR FIVE (5) YEARS FORM THE DATE OF ATP"</div>
+                                  <div>
+                                      <div>Range of Series: HOSI0000000001 to HOSI0099999999</div>
+                                      <div>Helix ERP Version 4.2</div>
+                                  </div>
+                              </td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          </div>
+          
+        </t>
+        
+      </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="beetech_enhancements_inherit_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="purchase_id" string="Source Document" attrs="{'invisible': [('picking_type_code','!=','incoming')]}"/>
+                <field name="tracking_number"/>
+                <field name="shipping_status" options="{'no_open': True}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='origin']" position="attributes">
+                <attribute name="attrs">{'invisible': [('picking_type_code','=','incoming')]}</attribute>
+            </xpath>
+
+            
+        </field>
+    </record>
+
+
+    <record id="beetech_enhancements_stock_prod_lot_tree" model="ir.ui.view">
+        <field name="name">stock.production.lot.form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="after">
+                <field name="status_lot"/>
+                <field name="lot_ref"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

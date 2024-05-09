@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="proj_qout_sale_menu_item"
+        name="Project Quotations"
+        action="action_proj_qout_sale_open_settings"
+        parent="sale.sale_order_menu"
+        sequence="1"/>
+
+    <!-- This will rename qoutation oddo to Sale Qoutation -->
+    <menuitem id="sale.menu_sale_quotations"
+        name="Sale Quotations"
+        action="sale.action_quotations_with_onboarding"
+        parent="sale.sale_order_menu"
+        sequence="1" groups="sales_team.group_sale_salesman"/>
+
+    <!-- <menuitem
+        id="proj_qout_purchase_menu_item"
+        name="Project"
+        action="action_proj_qout_purchase_open_settings"
+        parent="purchase.menu_procurement_management"
+        sequence="3"/> -->
+</odoo>

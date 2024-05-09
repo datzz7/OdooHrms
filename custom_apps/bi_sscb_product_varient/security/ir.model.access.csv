@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_size,Access Custom Size,model_custom_size,,1,1,1,1
+access_custom_style,Access Custom Style,model_custom_style,,1,1,1,1
+access_custom_color,Access Custom Color,model_custom_color,,1,1,1,1
+access_custom_brand,Access Custom Brand,model_custom_brand,,1,1,1,1

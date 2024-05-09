@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bir_sls_slp_enhancements_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="last_name" attrs="{'invisible':[('company_type', '!=', 'person')]}"/>
+                <field name="first_name" attrs="{'invisible':[('company_type', '!=', 'person')]}"/>
+                <field name="middle_name" attrs="{'invisible':[('company_type', '!=', 'person')]}"/>
+                <field name="full_name" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

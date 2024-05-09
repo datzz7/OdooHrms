@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bir_slp_view_tree" model="ir.ui.view">
+        <field name="name">bir.slp.view.tree</field>
+        <field name="model">bir.slp</field>
+        <field name="arch" type="xml">
+            <tree string="BIR Summary List Purchase" delete="1" create="0">
+                <field name="posting_date" invisible="1"/>
+                <field name="vendor_tin"/>
+                <field name="company_name"/>
+                <field name="last_name"/>
+                <field name="first_name"/>
+                <field name="middle_name"/>
+                <field name="address1"/>
+                <field name="address2"/>
+                <field name="exempt"/>
+                <field name="zero_rated"/>
+                <field name="services"/>
+                <field name="capital_goods"/>
+                <field name="other_capital_goods"/>
+                <field name="taxable_net_vat"/>
+                <field name="vat_rate"/>
+                <field name="input_vat"/>
+                <field name="total_purchases"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bir_slp_view_form" model="ir.ui.view">
+        <field name="name">bir.slp.view.form</field>
+        <field name="model">bir.slp</field>
+        <field name="arch" type="xml">
+            <form string="BIR (SLP) Summary List Purchase" edit="0">
+                <sheet>
+                <div class="oe_title">
+                    <h1>
+                        <field name="account_invoice_id" default_focus="1" placeholder="Vendor Reference" readonly="1"/>
+
+                    </h1>
+                </div>
+                    <group>
+                        <group>
+                            <field name="posting_date"/>
+                            <field name="purchase_voucher_id"/>
+                            <field name="vendor_tin"/>
+                            <field name="company_name"/>
+                            <field name="last_name" attrs="{'invisible':[('company_name', '=', True)]}"/>
+                            <field name="first_name" attrs="{'invisible':[('company_name', '=', True)]}"/>
+                            <field name="middle_name" attrs="{'invisible':[('company_name', '=', True)]}"/>
+                            <field name="address1"/>
+                            <field name="address2"/>
+                        </group>
+                        <group>
+                            <field name="exempt"/>
+                            <field name="zero_rated"/>
+                            <field name="services"/>
+                            <field name="capital_goods"/>
+                            <field name="other_capital_goods"/>
+                            <field name="taxable_net_vat"/>
+                            <field name="vat_rate"/>
+                            <field name="input_vat"/>
+                            <field name="total_purchases"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bir_slp_search_view" model="ir.ui.view">
+        <field name="name">bir.slp</field>   
+        <field name="model">bir.slp</field>  
+        <field name="arch" type="xml">    
+            <search string="Posting Date">
+                <field name="vendor_tin" string="Vendor TIN"/>
+                <field name="posting_date" string="Posting Date"/>
+                <separator/>
+                <filter string="Vendor TIN" name="vendor_tin" domain="[('vendor_tin', '=', True )]"/>
+                <filter string="Posting Date" name="posting_date" domain="[]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Vendor TIN" name="vendor_tin" domain="[]" context="{'group_by':'vendor_tin'}"/>
+                    <filter string="Posting Date" name="posting_date" domain="[]" context="{'group_by':'posting_date'}"/>
+                </group>       
+            </search>     
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="bir_slp_actions">
+        <field name="name">BIR (SLP) Summary List Purchase</field>
+        <field name="res_model">bir.slp</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="bir_slp_search_view"/>
+        <field name="context">{'group_by': 'posting_date'}</field>
+        <field name="help" type="html">
+            <p claszs="oe_view_no_content_create">No (SLP) Records.</p>
+        </field>
+    </record>
+
+</odoo>

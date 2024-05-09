@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="product_list_count_sheet">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+               
+                   <div class="page">
+                     <div>
+                        <h3>
+                           Physical Inventory Worksheet
+                        </h3>
+                     </div>
+                     <div>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Code</th>
+                              <th>Item Description</th>
+                          
+                              <th>On Hand</th>
+                              <th>Phy. Count</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                             <t t-foreach="docs" t-as="product">
+                              <tr>
+                                  <td><span t-esc="product.default_code"/></td>
+                                  <td><span t-esc="product.name"/></td>
+                                
+                                  <td><span t-esc="product.qty_available"/></td>
+                                  <td></td>
+                              </tr>
+                              </t>
+                          </tbody>
+                      </table>
+                     </div>
+                      
+                   </div>
+                  <div class="footer">
+                     <p>Page   <span class="page"/> / <span class="topage"/></p>
+                  </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

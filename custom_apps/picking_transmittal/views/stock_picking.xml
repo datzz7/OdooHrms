@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_tree_inherit_transmittal" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="picking_type_code" invisible="1"/>
+                    <field name="transmittal_id" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                    <field name="area_country_id" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_picking_form_inherit_transmittal" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="after">
+                    <group>
+                        <group>
+                            <field name="driver_id" attrs="{'invisible':[('picking_type_code', '!=', 'outgoing')]}"/>
+                        </group>
+                        <group>
+                            <field name="helper_id" attrs="{'invisible':[('picking_type_code', '!=', 'outgoing')]}"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//button[@name='button_validate']" position="replace">
+                    <button name="button_validate"
+                            attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}"
+                            string="Validate" type="object" class="oe_highlight"
+                            groups="picking_transmittal.group_transmittal_receiver"/>
+                </xpath>
+                <field name="origin" position="after">
+                    <field name="picking_type_code" invisible="1"/>
+                    <field name="area_country_id" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                </field>
+                <field name="backorder_id" position="after">
+                    <field name="salesman_id" string="Salesman" readonly="0" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                    <field name="vehicle_id" context="{'from_picking': 1}" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_picking_internal_search_inherit_stock_picking" model="ir.ui.view">
+            <field name="name">stock.picking.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <field name="picking_type_id" position="after">
+                    <field name="area_country_id"/>
+                </field>
+                <xpath expr="//filter[@name='picking_type']" position="after">
+                    <filter string="Area" name="area" context="{'group_by': 'area_country_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_delivery_picking_tree_ready" model="ir.actions.act_window">
+            <field name="name">To Do</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{'search_default_picking_type_id': [active_id],'default_picking_type_id':
+                active_id,'search_default_available':1,'search_default_waiting': 1,'search_default_area': 1,
+                'from_picking': 1}
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No transfer found. Let's create one!
+                </p>
+                <p>
+                    Transfers allow you to move products from one location to another.
+                </p>
+            </field>
+        </record>
+
+        <!-- Action to create transmittal -->
+        <record id="picking_transmittals_create_action_server" model="ir.actions.server">
+            <field name="name">Create Transmittal</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_view_types">list</field>
+            <field name="groups_id"
+                   eval="[(4, ref('picking_transmittal.group_transmittal_maker')),(4, ref('picking_transmittal.group_transmittal_manager'))]"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_transmittals_create()
+            </field>
+        </record>
+
+        <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+            <field name="context">{'from_picking': 1}</field>
+        </record>
+
+        <!-- Stock Picking Type Views -->
+        <record id="inherite_view_stock_picking_type_kanban" model="ir.ui.view">
+            <field name="name">stock.picking.type.kanban</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='get_action_picking_tree_ready']" position="replace">
+                    <button class="btn btn-primary" name="get_action_picking_tree_ready" type="object"
+                            attrs="{'invisible': [('code', '=', 'outgoing')]}">
+                        <span t-if="record.code.raw_value =='incoming'">
+                            <t t-esc="record.count_picking_ready.value"/>
+                            To Process
+                        </span>
+                        <span t-if="record.code.raw_value =='outgoing'">
+                            <t t-esc="record.count_picking_ready.value"/>
+                            To Process
+                        </span>
+                        <span t-if="record.code.raw_value =='internal'">
+                            <t t-esc="record.count_picking_ready.value"/>
+                            To Process
+                        </span>
+                    </button>
+                    <button class="btn btn-primary" name="%(picking_transmittal.action_delivery_picking_tree_ready)d"
+                            type="action"
+                            attrs="{'invisible': [('code', '!=', 'outgoing')]}">
+                        <span t-if="record.code.raw_value =='incoming'">
+                            <t t-esc="record.count_picking_ready.value"/>
+                            To Process
+                        </span>
+                        <span t-if="record.code.raw_value =='outgoing'">
+                            <t t-esc="record.count_picking_ready_waiting.value"/>
+                            To Process
+                        </span>
+                        <span t-if="record.code.raw_value =='internal'">
+                            <t t-esc="record.count_picking_ready.value"/>
+                            To Process
+                        </span>
+                    </button>
+                </xpath>
+                <field name="count_picking_ready" position="after">
+                    <field name="count_picking_ready_waiting"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Sale Order Form View -->
+        <record id="inherited_view_order_sale_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="salesman_id" options='{"no_open": True, "no_create": True}'/>
+                </xpath>
+                <xpath expr="//button[@name='action_view_delivery']" position="attributes">
+                    <attribute name="context">{'from_picking': 1}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Received Stock Picking List views -->
+        <record id="view_received_picking_list_tree" model="ir.ui.view">
+            <field name="name">received.stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <tree string="Received Picking list">
+                    <field name="name" decoration-bf="1"/>
+                    <field name="partner_id" optional="show"/>
+                    <field name="scheduled_date" optional="show" widget="remaining_days"
+                        attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <field name="transmittal_id"/>
+                    <field name="origin" optional="show"/>
+                    <field name="state" optional="show" widget="badge" decoration-success="state == 'done'"
+                        decoration-info="state not in ('done', 'cancel')"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_received_picking_list" model="ir.actions.act_window">
+            <field name="name">Received Picking List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="view_id" ref="picking_transmittal.view_received_picking_list_tree"/> 
+            <field name="context">{"search_default_available": 1}</field>
+            <field name="domain">
+                [('transmittal_id.state','=','received')]
+            </field>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <menuitem id="menu_received_picking_list" name="Received Picking List" parent="sale.menu_sale_invoicing"
+                  sequence="1" action="action_received_picking_list"/>
+
+
+    </data>
+</odoo>
+

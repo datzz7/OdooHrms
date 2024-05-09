@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="free_goods_sale_inherit_form" model="ir.ui.view">
+        <field name="name">sale.order.free.goods.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale_header']/group[1]" position="inside">
+                <field name="with_free_goods" attrs="{'readonly': [('state','!=','draft')]}"/>
+            </xpath>
+
+            <xpath expr="//notebook[1]" position="after">
+                <notebook attrs="{'invisible': [('with_free_goods','=',False)], 'readonly': [('state','!=','draft')]}">
+                    <page name="free_goods" string="Free goods">
+                        <field name="free_goods_line_ids">
+                            <tree editable="bottom">
+                                <control>
+                                    <create name="add_product" string="Add free product"/>
+                                </control>
+                                <field options="{'no_create': True,'no_open': True}" name="product_id" domain="[('type','=','product')]" required="1"/>
+                                <field options="{'no_create': True,'no_open': True}" name="uom_id" required="1"/>
+                                <field name="quantity"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

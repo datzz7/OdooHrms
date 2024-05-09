@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="custom_help" model="ir.config_parameter">
+            <field name="key">briqx_debranding.new_name</field>
+            <field name="value">BriQ</field>
+        </record>
+        <record id="custom_title" model="ir.config_parameter">
+            <field name="key">briqx_debranding.new_title</field>
+            <field name="value">BriQ</field>
+        </record>
+        <record id="custom_person" model="ir.config_parameter">
+            <field name="key">briqx_debranding.planner_footer</field>
+            <field name="value">Digprime Incorporated - IT Solutions Company</field>
+        </record>
+    </data>
+</odoo>

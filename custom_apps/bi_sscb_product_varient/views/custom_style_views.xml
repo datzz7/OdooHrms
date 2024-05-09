@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_style_tree_view" model="ir.ui.view">
+        <field name="name">custom.style.tree.view</field>
+        <field name="model">custom.style</field>
+        <field name="arch" type="xml">
+            <tree string="Custom Styles" editable="bottom">
+                <field name="name" string="Style"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_style_action" model="ir.actions.act_window">
+        <field name="name">Styles</field>
+        <field name="res_model">custom.style</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="custom_style_menu" name="Styles" parent="sale.prod_config_main" action="custom_style_action"/>
+</odoo>

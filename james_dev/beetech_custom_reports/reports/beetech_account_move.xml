@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- for T2403-001231 -->
+    <template priority='1' id="report_invoice_document_inherit" name="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+      <xpath expr="//t[@t-call='web.external_layout']" position="inside">
+        <style>
+          #beetech_attachment{
+          font-size:0.6rem!important;
+          }
+  
+          span,p,h2,th,td,h5,strong {
+          font-size: 0.8rem!important;
+          }
+  
+          *{
+          margin:0!important;
+          padding:0!important;
+  
+          }
+  
+          th{
+          text-transform: uppercase!important;
+          }
+        </style>
+      </xpath>
+        <xpath expr="//div[@id='informations']" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+        <xpath expr="//div[@class='page']/h2[1]" position="before">
+          <div class="text-center mb-2" >
+            <h3 class="h3">
+            <t t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</t>
+                          <t t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</t>
+                          <t t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</t>
+                          <t t-if="o.move_type == 'out_refund'">Credit Note</t>
+                          <t t-if="o.move_type == 'in_refund'">Vendor Credit Note</t>
+                          <t t-if="o.move_type == 'in_invoice'">Vendor Bill</t>
+                          </h3>
+                          </div>
+          <div class="row mt-4 mb-4">
+                      <div class="col-auto">
+                        <h2 class="h5">
+                          <span t-if="o.move_type=='out_invoice'">Customer Details</span>
+                          <span t-if="o.move_type=='in_invoice'">Vendor Details</span>
+                        </h2>
+                  
+                      </div>
+                      <div class="col-auto">
+                        <h2 class="h5">Shipping Address</h2>
+                        <t>
+                      <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                      <div t-if="o.partner_id.vat" class="mt16">
+                          <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                          <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+                  </t>
+                      </div>
+                      <div class="col-auto">
+                        <h2 class="h5"><span t-if="o.name != '/'" t-field="o.name"/></h2>
+                        <div class="mw-100" t-if="o.invoice_date" name="invoice_date">
+                              <t t-if="o.move_type == 'out_invoice'"><strong>Invoice Date:</strong></t>
+                              <t t-elif="o.move_type == 'out_refund'"><strong>Credit Note Date:</strong></t>
+                              <t t-elif="o.move_type == 'out_receipt'"><strong>Receipt Date:</strong></t>
+                              <t t-else=""><strong>Date:</strong></t>
+                              <span class="m-0" t-field="o.invoice_date"/>
+                          </div>
+                          <div class="mw-100" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
+                              <strong>Due Date:</strong>
+                              <span class="m-0" t-field="o.invoice_date_due"/>
+                          </div>
+                          <div class="mw-100" t-if="o.invoice_origin" name="origin">
+                              <strong>Source:</strong>
+                              <span class="m-0" t-field="o.invoice_origin"/>
+                          </div>
+                          <div class="mw-100" t-if="o.partner_id.ref" name="customer_code">
+                              <strong>Customer Code:</strong>
+                              <span class="m-0" t-field="o.partner_id.ref"/>
+                          </div>
+                          <div class="mw-100" t-if="o.ref" name="reference">
+                              <strong>Reference:</strong>
+                              <span class="m-0" t-field="o.ref"/>
+                          </div>
+                      </div>
+                    </div>
+        </xpath>
+        <xpath expr="//div[@class='page']/h2[1]" position="replace"/>
+        <xpath expr="//div[@id='qrcode']" position="after">
+        
+      
+          <div class="row mt-4" id="beetech_attachment">
+            <div class="col-auto m-3 mt-4">
+              <div>
+                <ol>
+                  <li>Customer will be billed after indicating acceptance of this quote.</li>
+                  <li>Payment will be due prior to delivery of service and goods..</li>
+                  <li>
+                    <div>
+                      <b>Payment Method</b>
+                    </div>
+                    <div>
+                      Cash Payment - Over the counter, Cash on Deposit
+  
+                    </div>
+                    <div>Check Payment under the name of: <b>BEETECH TRADING AND
+                        SERVICES OPC</b></div>
+                    <div>Online Payment - GCASH, BANK TRANSFER, PAYMONEY, OTHERS.</div>
+                  </li>
+                  <li>On stock item: Will process, deliver or pick up immidiately.</li>
+                  <li>Orderbasis item: ETA 45-60 Days.</li>
+                  <li>Payment Terms for orderbasis: 100% Full Payment Before Arranging the
+                    items.</li>
+                  <li>
+                    <div>
+                      <b>BANK DETAILS:</b>
+                    </div>
+                    <div>Bank: Asia United Bank</div>
+                    <div>
+                      <b>Bank Name: Beetech Trading and Services OPC</b>
+                    </div>
+                    <div>Account #: 309-01-000109-4</div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div id="waranty_section" class="col-auto">
+              <div>
+                <h5>WARANTY AND SERVICES</h5>
+                <ol>
+                  <li>7 Days replacement for any defective device, 1 year pump parts warranty and 10
+                    years
+                    for solar panels.</li>
+                </ol>
+              </div>
+              <div>
+                <h5>VOID WARRANTIES:</h5>
+                <ol>
+                  <li>The device has been damaged by negligence, mishandling, acts of third parties,
+                    accident, fire,
+                    flood, lightning, power surges or outages, or other events or circumstances
+                    outside
+                    the control of
+                    BeeTech Solutions, or has not been operated in accordance with the operating and
+                    installation instruction; or
+                    The device has been altered or repaired by a party other than BeeTech Solution or
+                    an
+                    authorized service representative of BeeTech
+                    Solutions; or
+                  </li>
+                  <li>
+                    The device has been altered or repaired by a party other than BeeTech Solution or
+                    an
+                    authorized service representative of BeeTech
+                    Solutions; or
+                  </li>
+                  <li>
+                    Modifications or accessories other than those manufactured or provided by BeeTech
+                    Solutions Corp have been made or attached to the
+                    device which, in the sole determination of BeeTech Solutions , have affected the
+                    performance, safety or reliability of the device; or
+                  </li>
+                  <li>
+                    The device’s original serial number has been modified or removed.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+  
+  
+  
+        <div id="signatories" class="row mt-5 pt-2">
+          <div class="col-6 text-center">
+            <span>
+              <b>Customer Acceptance (sign below):</b>
+            </span>
+  
+            <div class="border-top text-center mt-3 mx-3">
+              <b>
+                <span>Full Name and Signature</span>
+              </b>
+            </div>
+  
+  
+          </div>
+          <div class="col-6 text-center">
+            <span>
+              <b>Prepared By</b>
+            </span>
+            <div class="border-top text-center mt-3 mx-3">
+              <span>
+                <b>Jay Ental (Sales and Marketing Head)</b>
+              </span>
+            </div>
+          </div>
+        </div>
+  
+  
+      </xpath>
+    </template>
+
+</odoo>

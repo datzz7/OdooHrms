@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <record id="da_product_variant_sale_inherit_form" model="ir.ui.view">
+        <field name="name">sale.order.inherit.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="bi_sscb_product_varient.sele_order_inherit_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='brand_id']" position="before">
+                <field name="variant_model_id" options="{'no_create': True, 'no_open':True}"/>
+                <field name="variant_warranty_id" options="{'no_create': True, 'no_open':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

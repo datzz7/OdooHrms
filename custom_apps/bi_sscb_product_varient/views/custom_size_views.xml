@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_size_tree_view" model="ir.ui.view">
+        <field name="name">custom.size.tree.view</field>
+        <field name="model">custom.size</field>
+        <field name="arch" type="xml">
+            <tree string="Custom Size" editable="bottom">
+                <field name="name" string="Size"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_size_action" model="ir.actions.act_window">
+        <field name="name">Sizes</field>
+        <field name="res_model">custom.size</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="custom_size_menu" name="Sizes" parent="sale.prod_config_main" action="custom_size_action"/>
+</odoo>

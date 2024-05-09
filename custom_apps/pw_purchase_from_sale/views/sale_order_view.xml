@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_purchase_button1" model="ir.ui.view">
+        <field name="name">sale.order.inherit.pw.purchase.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button string="Create Purchase Order" name="%(pw_purchase_from_sale.purchase_order_wizard_action)d"  type="action" groups="pw_purchase_from_sale.pw_group_create_so" class="oe_highlight"/>
+            </xpath>
+            <div class="oe_button_box" position="inside">
+                <button class="oe_stat_button" name="open_purchase_order" type="object" icon="fa-shopping-cart" attrs="{'invisible':[('purchase_count','=', 0)]}" groups="pw_purchase_from_sale.pw_group_create_so">
+                    <field string="Purchase" name="purchase_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>

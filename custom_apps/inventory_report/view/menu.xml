@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="root_invent_rep_menu"
+        name="Generate Inventory Reort"
+        parent = 'stock.menu_warehouse_report'
+        sequence="3"/>
+
+    <menuitem
+        id="invent_rep_wh_menu"
+        name="Inventory Report Per Warehouse"
+        parent = 'inventory_report.root_invent_rep_menu'
+        action = "wiz_invent_rep_wh_action"/>
+    
+    <menuitem
+        id="invent_rep_van_menu"
+        name="Inventory Report Per Van"
+        parent = 'inventory_report.root_invent_rep_menu'
+        action = "wiz_invent_rep_van_action"/>
+
+</odoo>

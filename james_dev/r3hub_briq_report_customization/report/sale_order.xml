@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+  <template id="report_saleorder_document_inherit_address"
+    name="report_saleorder_document_inherit_address" inherit_id="sale.report_saleorder_document">
+    <xpath expr="//div[@t-field='doc.partner_id']" position="replace">
+      <t t-if="doc.partner_id.company_type =='person'">
+
+        <!--<div
+        t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;,
+        &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;:
+        True}"/>-->
+        <div t-field="doc.partner_id.name" />
+        <t t-if="doc.partner_id.parent_id">
+          <div t-field="doc.partner_id.parent_id"
+            t-options="{'widget': 'contact', 'fields': ['name'], 'no_marker': True}" />
+        </t>
+        <div t-field="doc.partner_id"
+          t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}" />
+
+      </t>
+      <!--<t
+      t-else="">-->
+
+      <!--        <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;,
+      &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;:
+      True}"/>-->
+
+
+      <!--</t>-->
+      <!--<t
+      t-set="address">-->
+      <!--        <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;,
+      &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;:
+      True}"/>-->
+      <!--        <p t-if="doc.partner_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax
+      ID'"/>: <span t-field="doc.partner_id.vat"/></p>-->
+      <!--</t>-->
+    </xpath>
+    <xpath expr="//div[@class='page']" position="inside">
+      <t t-if="doc.state in ('draft','sent')">
+        <t t-call="r3hub_briq_report_customization.report_saleqoutation_second_page" />
+      </t>
+
+    </xpath>
+
+
+    <xpath expr="//td[@name='td_taxes']" position="replace">
+      <!--This
+      will make remove the selected-->
+    </xpath>
+
+    <xpath expr="//th[@name='th_taxes']" position='replace'>
+      <!--This
+      will make remove the selected-->
+    </xpath>
+
+    <xpath expr="//p[@t-field='doc.note']" position="replace">
+      <div style="font-size: 14px"><span class="text-decoration-underline font-weight-bold ml-3">TERMS AND CONDITIONS:</span>
+       <p t-field="doc.note" />
+      </div>
+    </xpath>
+    <xpath expr="//span[@t-field='doc.payment_term_id.note']" position="replace">
+      <!-- Replace Blank to Remove -->
+   </xpath>
+  </template>
+
+
+  <template id="report_saleqoutation_second_page" name="report_saleqoutation_second_page">
+    <div style="font-size: 14px;margin-top:50px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <span>PO/Payment Issuance;</span>
+          </div>
+          <div class="col-auto">
+            <span>
+              <b>VAT-INC TRANSACTION</b>
+            </span>
+            <br />
+            <span>BEETECH SOLUTIONS</span>
+            <br />
+            <span>Bank to bank thru; Peso Acct#</span>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="container">
+        <span class="text-decoration-underline font-weight-bold">SERVICE LEVEL AGREEMENT:</span>
+        <ol>
+          <li> SUPPORT LEVEL <ul style="list-style-type:none;">
+              <li>Level 1 (L1) ---- In house personnel</li>
+              <li>Level 2 (L2) ---- Phone /remote support</li>
+              <li>Level 3 (L3) ---- Technical Engineer Onsite Support on a case-to-case basis.</li>
+            </ul>
+            <div
+              class="mt-3">RTPS Contact Person L2/L3; </div>
+            <div>
+              <div class="row  mt-2">
+                <div class="col-2 ">
+                  <span>Primary:</span>
+                </div>
+                <div class="col-auto">
+                  <span>
+                    <b>Name</b>
+                  </span>
+                  <br />
+                  <span>Technical Engineer</span>
+                  <br />
+                  <span>Cell:</span>
+                  <br />
+                  <span>Email:</span>
+                </div>
+              </div>
+            </div>
+                       
+                       <div>
+              <div class="row  mt-3">
+                <div class="col-2">
+                  <span>Secondary:</span>
+                </div>
+                <div class="col-auto">
+                  <span>
+                    <b>Name</b>
+                  </span>
+                  <br />
+                  <span>Technical Engineer</span>
+                  <br />
+                  <span>Cell: </span>
+                  <br />
+                  <span>Email: </span>
+                </div>
+              </div>
+            </div>
+
+          </li>
+        </ol>
+      </div>
+      <div>
+        <div>Upon approval and issuance of Purchase Order BEETECH shall commence ordering containing
+          on
+          the proposal.
+          Cancellations of orders are subject for 50% re-stocking fee.
+        </div>
+
+        <div class="mt-2">
+          Thank you very much and hope this will merit your kind approval. God Bless!!
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div class="row">
+          <div class="col-6">
+            <span>Submitted by:</span>
+            <br />
+            <span>BEETECH SOLUTIONS</span>
+          </div>
+          <div class="col-6">
+            <div>
+              <div>
+                <span>Conforme / Date</span>
+              </div>
+              <div
+                style="margin-left:5px;height:20px;width:150px;border:0;border-bottom:1px black solid;" />
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col">
+            <span>Name</span>
+            <br />
+            <span>Mobile Number</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

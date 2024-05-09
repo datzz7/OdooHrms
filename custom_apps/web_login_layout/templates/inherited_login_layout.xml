@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="inherited_assets_frontend_login" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/web_login_layout/static/src/css/oe_login_layout.css" />
+		</xpath>
+	</template>
+
+	<template id="login_layout_custom"
+		inherit_id="web.login_layout" name="Login Layout Inherit">
+		<xpath expr="//t[@t-call='web.frontend_layout']/t[last()]"
+			position="after">
+			<t t-set="signin_obj"
+				t-value="request.env['res.config.settings'].sudo().search([])"></t>
+			<t t-if="signin_obj">
+				<t t-set="body_classname"
+					t-value="'lys_custom_background %s' %signin_obj[0].layout_structure or ''" />
+				<t t-set="login_card_classes"
+					t-value="'rounded-0 shadow-sm bg-white'" />
+				
+				<t t-if="signin_obj[0].layout_option=='l1'">
+					<t t-if="signin_obj[0].bg_image">
+						<div class="sign_in_bg_image2"
+							t-attf-style="background-image: url('#{'data:image/png;base64,%s' % to_text(signin_obj[0].bg_image.datas)}');filter: blur(#{'%s' % signin_obj[0].bg_blur}px);"></div>
+					</t>
+				</t>
+
+				<t t-if="signin_obj[0].layout_option=='l2'">
+					<t t-if="signin_obj[0].bg_image">
+						<div class="sign_in_bg_image3"
+							t-attf-style="background-image: url('#{'data:image/png;base64,%s' % to_text(signin_obj[0].bg_image.datas)}');filter: blur(#{'%s' % signin_obj[0].bg_blur}px);"></div>
+					</t>
+				</t>
+
+				<t t-if="signin_obj[0].layout_option=='l3' or signin_obj[0].layout_option=='l4'">
+					<t t-if="signin_obj[0].bg_image">
+						<div class="sign_in_bg_image"
+							t-attf-style="background-image: url('#{'data:image/png;base64,%s' % to_text(signin_obj[0].bg_image.datas)}');filter: blur(#{'%s' % signin_obj[0].bg_blur}px);"></div>
+					</t>
+				</t>
+			
+
+				<t t-if="not signin_obj[0].bg_image">
+					<t t-if="signin_obj[0].bg_color">
+						<div class="sign_in_bg_color"
+							t-attf-style="background-color:#{'%s' % signin_obj[0].bg_color};filter: blur(#{'%s' % signin_obj[0].bg_blur}px);"></div>
+					</t>
+				</t>
+			</t>
+		</xpath>
+		<xpath expr="//t[@t-set='body_classname']" position="after">
+			<t t-set="body_classname" t-value="''" />
+		</xpath>
+	</template>
+</odoo>

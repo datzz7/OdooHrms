@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="general_ledger_book_action" model="ir.actions.act_window">
+        <field name="name">General Ledger</field>
+        <field name="res_model">briq.general.ledger</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="domain">[]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="briq_general_ledger_view_tree" model="ir.ui.view">
+        <field name="name">briq.general.ledger.view.tree</field>
+        <field name="model">briq.general.ledger</field>
+        <field name="arch" type="xml">
+            <tree string="General Ledger">
+                <field name="date" optional="hide"/>
+                <field name="move_id" />
+                <field name="partner_id"/>
+                <field name="account_id"/>
+                <field name="debit" />
+                <field name="credit" />
+                <field name="total_amount"/>
+                <field name="journal_id" optional="hide"/>
+                <field name="currency_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_briq_general_ledger_pivot" model="ir.ui.view">
+        <field name="name">briq.general.ledger.pivot</field>
+        <field name="model">briq.general.ledger</field>
+        <field name="arch" type="xml">
+            <pivot string="General Ledger" sample="1">
+                <field name="journal_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+</odoo>

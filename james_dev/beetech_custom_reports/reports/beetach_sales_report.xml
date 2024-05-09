@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="inherit_report_saleorder_document" name="inherit_report_saleorder_document"
+    inherit_id="sale.report_saleorder_document">
+    <xpath expr="//t[@t-call='web.external_layout']" position="inside">
+      <style>
+        #beetech_attachment{
+        font-size:0.6rem!important;
+        }
+
+        span,p,t,h2,th,td,h5,strong {
+        font-size: 0.8rem!important;
+        }
+
+        *{
+        margin:0!important;
+        padding:0!important;
+
+        }
+
+        th{
+        text-transform: uppercase!important;
+        }
+      </style>
+    </xpath>
+    <!-- Comment -->
+    <xpath expr="//td[@name='td_name']/span[@t-field='line.name']" position="replace">
+      <t t-if="line.product_id">
+        <span t-field="line.product_id.name" />
+      </t>
+      <t t-else="">
+        <span t-field="line.name" />
+      </t>
+    </xpath>
+
+
+    <xpath expr="//th[@name='th_description']" position="attributes">
+      <attribute name="style">width:30%!important;</attribute>
+    </xpath>
+    <xpath expr="//th[@name='th_subtotal']" position="replace">
+      <th name="th_subtotal" class="text-center">
+        <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+        <span groups="account.group_show_line_subtotals_tax_included">Total</span>
+      </th>
+    </xpath>
+    <xpath expr="//th[@name='th_priceunit']" position="replace">
+      <th name="th_priceunit" class="text-right">U-Price</th>
+    </xpath>
+
+
+    <xpath expr="//t[@t-set='address']/div[@t-field='doc.partner_id']" position="replace">
+      <!--Remove-->
+    </xpath>
+    <xpath expr="//t[@t-set='address']/p[@t-if='doc.partner_id.vat']" position="replace">
+      <!--Remove-->
+    </xpath>
+
+    <xpath expr="//div[@id='informations']" position="replace">
+      <!--Blank
+    For Removing -->
+    </xpath>
+    <xpath expr="//div[@class='page']/h2[1]" position="replace">
+      <!--Blank
+    For Removing -->
+    </xpath>
+
+
+    <xpath expr="//t[3]" position="replace">
+      <div class="text-center mb-2">
+
+        <h2>
+          <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+            <h3 class="text-uppercase font-weight-bold h3" t-if="doc.state not in ['draft','sent']"
+              style="color:black">Sales
+              Order</h3>
+            <h3 class="text-uppercase font-weight-bold h3" t-if="doc.state in ['draft','sent']"
+              style="color:black">Sales
+              Quotation </h3>
+          </t>
+        </h2>
+
+
+      </div>
+      <div class="mb-3">
+        <!--<t
+      t-set="information_block">-->
+
+        <div class="row">
+          <div class="col-4">
+            <t>
+              <h2 class="h6 bold">
+                <b>Client Details</b>
+              </h2>
+              <div t-field="doc.partner_id"
+                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
+              <p t-if="doc.partner_id.vat"><t
+                  t-esc="doc.company_id.country_id.vat_label or 'Tax ID'" />: <span
+                  t-field="doc.partner_id.vat" /></p>
+            </t>
+          </div>
+          <div class="col-4">
+            <t>
+              <h2 class="h6 bold">
+                <b>Shipping Details</b>
+              </h2>
+              <div t-field="doc.partner_invoice_id"
+                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
+
+            </t>
+          </div>
+          <div class="col-4">
+            <h2 class="h5">
+              <!--<t
+            t-if="not (env.context.get('proforma', False) or is_pro_forma)">-->
+              <!--    <span t-if="doc.state not in ['draft','sent']">Order # </span>-->
+              <!--    <span t-if="doc.state in ['draft','sent']">Quotation # </span>-->
+              <!--</t>-->
+              <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                <span>Pro-Forma Invoice # </span>
+              </t>
+              <span t-field="doc.name" />
+            </h2>
+            <div t-if="doc.client_order_ref">
+              <strong>Your Reference:</strong>
+              <p class="m-0" t-field="doc.client_order_ref" />
+            </div>
+            <div t-if="doc.date_order and doc.state not in ['draft','sent']">
+              <strong>Order Date:</strong>
+              <p class="m-0" t-field="doc.date_order" />
+            </div>
+            <div t-if="doc.date_order and doc.state in ['draft','sent']">
+              <strong>Quotation Date:</strong>
+              <p class="m-0" t-field="doc.date_order"
+                t-options="{&quot;widget&quot;: &quot;date&quot;}" />
+            </div>
+            <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" name="expiration_date">
+              <strong>Validity:</strong>
+              <p class="m-0" t-field="doc.validity_date" />
+            </div>
+            <div t-if="doc.user_id.name">
+              <strong>Salesperson:</strong>
+              <p class="m-0" t-field="doc.user_id" />
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="mb-2">
+        <h2 class="h5"> Project / Other Info: <span t-field="doc.project_details" />
+        </h2>
+
+      </div>
+    </xpath>
+
+
+    <!--<xpath
+  expr="//div[@name = 'expiration_date']" position="replace">-->
+    <!--    <div class="col-auto col-3 mw-100 mb-2" name="expiration_date">-->
+    <!--        <strong>Validity:</strong>-->
+    <!--        <p class="m-0" t-field="doc.validity_date"/>-->
+    <!--    </div>-->
+    <!--</xpath>-->
+
+    <xpath expr="//td[@name='td_quantity']" position="replace">
+      <td name="td_quantity" class="text-right">
+        <span t-field="line.product_uom_qty" />
+      </td>
+      <td name="td_uom" class="text-right">
+        <span t-field="line.product_uom" />
+      </td>
+    </xpath>
+
+
+    <xpath expr="//th[@name='th_quantity']" position="replace">
+      <th name="th_quantity" class="text-right">Qty</th>
+      <th name="th_unit" class="text-right">Uom</th>
+    </xpath>
+
+
+    <xpath expr="//p[@t-field='doc.note']" position="replace">
+      <t t-if="doc.note">
+        <p t-field="doc.note" class="m-3 mt-4" />
+      </t>
+      <t t-else="">
+        <div class="row mt-4" id="beetech_attachment">
+          <div class="col-auto m-3 mt-4">
+            <div>
+              <ol>
+                <li>Customer will be billed after indicating acceptance of this quote.</li>
+                <li>Payment will be due prior to delivery of service and goods..</li>
+                <li>
+                  <div>
+                    <b>Payment Method</b>
+                  </div>
+                  <div>
+                    Cash Payment - Over the counter, Cash on Deposit
+
+                  </div>
+                  <div>Check Payment under the name of: <b>BEETECH TRADING AND
+                      SERVICES OPC</b></div>
+                  <div>Online Payment - GCASH, BANK TRANSFER, PAYMONEY, OTHERS.</div>
+                </li>
+                <li>On stock item: Will process, deliver or pick up immidiately.</li>
+                <li>Orderbasis item: ETA 45-60 Days.</li>
+                <li>Payment Terms for orderbasis: 100% Full Payment Before Arranging the
+                  items.</li>
+                <li>
+                  <div>
+                    <b>BANK DETAILS:</b>
+                  </div>
+                  <div>Bank: Asia United Bank</div>
+                  <div>
+                    <b>Bank Name: Beetech Trading and Services OPC</b>
+                  </div>
+                  <div>Account #: 309-01-000109-4</div>
+                </li>
+              </ol>
+            </div>
+          </div>
+          <div id="waranty_section" class="col-auto">
+            <div>
+              <h5>WARANTY AND SERVICES</h5>
+              <ol>
+                <li>7 Days replacement for any defective device, 1 year pump parts warranty and 10
+                  years
+                  for solar panels.</li>
+              </ol>
+            </div>
+            <div>
+              <h5>VOID WARRANTIES:</h5>
+              <ol>
+                <li>The device has been damaged by negligence, mishandling, acts of third parties,
+                  accident, fire,
+                  flood, lightning, power surges or outages, or other events or circumstances
+                  outside
+                  the control of
+                  BeeTech Solutions, or has not been operated in accordance with the operating and
+                  installation instruction; or
+                  The device has been altered or repaired by a party other than BeeTech Solution or
+                  an
+                  authorized service representative of BeeTech
+                  Solutions; or
+                </li>
+                <li>
+                  The device has been altered or repaired by a party other than BeeTech Solution or
+                  an
+                  authorized service representative of BeeTech
+                  Solutions; or
+                </li>
+                <li>
+                  Modifications or accessories other than those manufactured or provided by BeeTech
+                  Solutions Corp have been made or attached to the
+                  device which, in the sole determination of BeeTech Solutions , have affected the
+                  performance, safety or reliability of the device; or
+                </li>
+                <li>
+                  The device’s original serial number has been modified or removed.
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+      </t>
+
+
+      <div id="signatories" class="row mt-5 pt-2">
+        <div class="col-6 text-center">
+          <span>
+            <b>Customer Acceptance (sign below):</b>
+          </span>
+
+          <div class="border-top text-center mt-3 mx-3">
+            <b>
+              <span>Full Name and Signature</span>
+            </b>
+          </div>
+
+
+        </div>
+        <div class="col-6 text-center">
+          <span>
+            <b>Prepared By</b>
+          </span>
+          <div class="border-top text-center mt-3 mx-3">
+            <span>
+              <b>Jay Ental (Sales and Marketing Head)</b>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
+    </xpath>
+  </template>
+</odoo>

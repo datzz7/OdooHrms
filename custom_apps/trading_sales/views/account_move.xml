@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="trading_sales_inherit_form" model="ir.ui.view">
+        <field name="name">account.move.trading.inherit.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@id='header_left_group']" position="inside">
+                <field name="or_number" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="customer_po_no" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="sales_type" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="order_type" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="country_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+
+            <xpath expr="//group[@id='header_right_group']" position="inside">
+                <field name="price_list_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+                <field name="partner_registered_names" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))],'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

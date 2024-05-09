@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="gen_inv_rep_wh">
+        <!--o_split_list solution for table column will appear to each table -->
+        <t t-call="web.html_container">
+           
+                <div class="header">
+                    <div style="float:left; margin: 20">
+                      <div>
+                        <span style="font-weight:Bold;">JAKKAR MARKETING CORP</span><br/>
+                        <span style="font-size: 0.8rem">ORIOLE ST. MICHAEL VILLAGE, MA-A DAVAO CITY</span><br/>
+                        <span style="font-size: 0.8rem">Telephone No. 302382</span>
+                      </div>
+                      <div>
+                        <div>
+                            <span style="font-weight:Bold;">Location: </span>
+                            <span style="font-size: 0.8rem"><t t-esc="docs.location_id.complete_name"/></span>
+                        </div>
+                          <div>
+                            <span style="font-weight:Bold;">Date/Time: </span>
+                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/>
+                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%l:%M %p')"/>
+                          </div>
+                        <span style="font-size: 0.8rem">User: </span>
+                        <span style="font-size: 0.8rem" t-esc="user.name"/>
+                    </div>
+                    </div>
+                    <br/>
+                   
+                </div>
+                <div class="page">
+                   <style>
+                    tr>:nth-child(1){
+                        width:10%
+                    }
+                     tr>:nth-child(2){
+                        width:70%
+                    }
+                     tr>:nth-child(3){
+                        width:10%
+                    }
+                     tr>:nth-child(4){
+                        width:10%
+                    }
+                     table{
+                          border-collapse:collapse;
+                          width:100%
+                        }
+                        table, th, td {
+                          border: 1px solid black;
+                        }
+                </style>
+                    
+                    <table class="table table-sm table-bordered" style="width:100%">
+                        <thead>
+                            <!--<tr>-->
+                            <!--    <td colspan="4">-->
+                            <!--        <t t-esc="stock_line.product_id.principal.name"/>-->
+                            <!--    </td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <th class="o_split_list">Code</th>
+                                <th class="o_split_list">Description</th>
+                                <th class="o_split_list">Cases</th>
+                                <th class="o_split_list">Pcs</th>
+                                <!--<th class="o_split_list">Principal</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="list_principal"/>
+                            <t t-set="docs.principal_list" t-value="docs.principal_list.clear()"/>
+                            <t t-foreach="docs" t-as="prin_col">
+                                <span t-esc="prin_col.return_principal_no_dup()"/>
+                                <t t-set="list_principal" t-value="prin_col.principal_list"/>
+                            </t>
+
+                            <t t-foreach="list_principal" t-as="prin_col">
+                                <tr style="background-color: #e0e0e0;"> 
+                                    <td colspan="13" style="text-align:left;font-weight: bold;">
+                                      <t t-esc="prin_col"/>
+                                    </td>
+                                  </tr>
+                                  
+                                <t t-foreach="docs" t-as="stock_line">
+                                    <t t-set="case" t-value="value"/>
+                                    <t t-if="str(stock_line.product_id.principal.name) in prin_col">
+                                        <tr>
+                                            <td><t t-esc="stock_line.internal_ref"/></td>
+                                            <td><t t-esc="stock_line.product_id.name"/></td>
+                                            <td><t t-esc="round(stock_line.case_qnty,2)"/></td>
+                                            <td><t t-esc="round(stock_line.available_quantity,2)"/></td>
+                                             <!--<td><t t-esc="stock_line.product_id.principal.name"/></td>-->
+                                        </tr>
+                                    </t>
+                                    
+                                </t>
+                            </t>
+                            
+                        </tbody>
+                    </table>
+                </div>
+          
+
+        </t>
+    </template>
+
+</odoo>

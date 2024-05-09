@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- sales.order.type action window -->
+    <record id="sales_order_type_action" model="ir.actions.act_window">
+        <field name="name">Sales Order Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sales.order.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create Sales Order Type
+            </p><p>
+                There is no sales order type record at the moment.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="sales_order_type_root_menu"
+        name="Sales Order Type"
+        action="trading_sales.sales_order_type_action"
+        parent="sale.menu_sales_config"
+        sequence="11"/>
+</odoo>
